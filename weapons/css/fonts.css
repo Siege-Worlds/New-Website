@@ -1,0 +1,27 @@
+@font-face {
+  font-family: 'GalanoLight';
+  src: url('../fonts/GalanoLight.eot');
+  src: local('☺'), url('../fonts/GalanoLight.woff') format('woff'),
+    url('../fonts/GalanoLight.ttf') format('truetype'),
+    url('../fonts/GalanoLight.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'GalanoMedium';
+  src: url('../fonts/GalanoMedium.eot');
+  src: local('☺'), url('../fonts/GalanoMedium.woff') format('woff'),
+    url('../fonts/GalanoMedium.ttf') format('truetype'),
+    url('../fonts/GalanoMedium.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'GalanoBold';
+  src: url('../fonts/GalanoBold.eot');
+  src: local('☺'), url('../fonts/GalanoBold.woff') format('woff'),
+    url('../fonts/GalanoBold.ttf') format('truetype'),
+    url('../fonts/GalanoBold.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
