@@ -24,6 +24,8 @@
 
 
     <script>
+        const API_BASE = <?php echo json_encode($GLOBALS['API_BASE'] ?? ''); ?>;
+
         document.getElementById('signup-button').addEventListener('click', function() {
             signupbutton();
         });
@@ -32,7 +34,7 @@
 
 
             const result = await (await fetch(
-                'https://siegeworlds-320f73534b59.herokuapp.com/api/pwreset', {
+                API_BASE + '/api/pwreset', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',

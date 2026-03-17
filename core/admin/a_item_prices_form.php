@@ -42,6 +42,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
+        const API_BASE = <?php echo json_encode($GLOBALS['API_BASE'] ?? ''); ?>;
+
         document.addEventListener('DOMContentLoaded', async function() {
             const itemDropdown = document.getElementById('itemDropdown');
             const itemDetails = document.getElementById('itemDetails');
@@ -51,13 +53,13 @@
 
             // Fetch item data from the API
             async function fetchItems() {
-                const response = await fetch('https://siegeworlds-320f73534b59.herokuapp.com/api/itemdata');
+                const response = await fetch(API_BASE + '/api/itemdata');
                 return await response.json();
             }
 
             // Fetch price data for a specific item from the API
             async function fetchItemPrices(itemId) {
-                const response = await fetch(`https://siegeworlds-320f73534b59.herokuapp.com/api/exchangeitem/${itemId}`);
+                const response = await fetch(`${API_BASE}/api/exchangeitem/${itemId}`);
                 return await response.json();
             }
 

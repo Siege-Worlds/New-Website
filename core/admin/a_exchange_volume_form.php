@@ -36,12 +36,14 @@
     </div>
 
     <script>
+        const API_BASE = <?php echo json_encode($GLOBALS['API_BASE'] ?? ''); ?>;
+
         let currentView = 'daily'; // Initialize with daily view
 
         // Function to fetch data from the API
         async function fetchVolumeData() {
             try {
-                const response = await fetch('https://siegeworlds-320f73534b59.herokuapp.com/api/exchangevolume');
+                const response = await fetch(API_BASE + '/api/exchangevolume');
                 let data = await response.json();
 
                 // Fill in missing dates
@@ -110,7 +112,7 @@
 
         // Function to fetch and calculate monthly volume data
         async function fetchMonthlyVolume() {
-            const response = await fetch('https://siegeworlds-320f73534b59.herokuapp.com/api/exchangevolume');
+            const response = await fetch(API_BASE + '/api/exchangevolume');
             let data = await response.json();
 
             const monthlyVolume = {};

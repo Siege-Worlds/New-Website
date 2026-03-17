@@ -1,5 +1,7 @@
 <?php
 
+$API_BASE = 'http://3.134.5.187:8080';
+
 function head()
 {
     include 'component/c_head.php';

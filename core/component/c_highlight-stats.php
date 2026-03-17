@@ -3,16 +3,16 @@
         <div class="companion-container">
             <div class="stats">
                 <div class="stat-box">
-                  <h1 id="nAccounts">0</h1>
-                  <h2 style="text-align: center;">Accounts Created</h2>
+                    <h1 id="nAccounts">0</h1>
+                    <h2 style="text-align: center;">Accounts Created</h2>
                 </div>
                 <div class="stat-box">
-                  <h1 id="nKills">0</h1>
-                  <h2 style="text-align: center;">Monsters Slain</h2>
+                    <h1 id="nKills">0</h1>
+                    <h2 style="text-align: center;">Monsters Slain</h2>
                 </div>
                 <div class="stat-box">
-                  <h1 id="nDivi">0</h1>
-                  <h2 style="text-align: center;">Divi Earned</h2>
+                    <h1 id="nDivi">0</h1>
+                    <h2 style="text-align: center;">Divi Earned</h2>
                 </div>
             </div>
         </div>
@@ -20,8 +20,10 @@
 </div>
 
 <script type="text/javascript">
+    const API_BASE = <?php echo json_encode($GLOBALS['API_BASE'] ?? ''); ?>;
+
     function loadStats(callback) {
-        $.get('https://siegeworlds-320f73534b59.herokuapp.com/api/usercount', result => {
+        $.get(API_BASE + '/api/usercount', result => {
             var nPlayers = result.user_count;
             var nKills = result.total_monster_kills;
             var nDivi = result.total_divi_earned / 100;

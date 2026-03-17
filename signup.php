@@ -56,6 +56,8 @@
     </footer>
 
     <script>
+        const API_BASE = <?php echo json_encode($GLOBALS['API_BASE'] ?? ''); ?>;
+
         document.getElementById('signup-button').addEventListener('click', function() {
             signupbutton();
         });
@@ -85,7 +87,7 @@
                 alert("Error: No email entered.")
             } else {
                 const result = await (await fetch(
-                    'https://siegeworlds-320f73534b59.herokuapp.com/api/register', {
+                    API_BASE + '/api/register', {
                         method: 'POST',
                         headers: {
                             'Accept': 'application/json',

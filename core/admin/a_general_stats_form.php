@@ -1,8 +1,10 @@
 <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
 
 <script type="text/javascript">
+    const API_BASE = <?php echo json_encode($GLOBALS['API_BASE'] ?? ''); ?>;
+
     function loadStats() {
-        $.get('https://siegeworlds-320f73534b59.herokuapp.com/api/usercount', result => {
+        $.get(API_BASE + '/api/usercount', result => {
             var nPlayers = result.user_count;
             var nKills = result.total_monster_kills;
             var nDivi = result.total_divi_earned / 100;
@@ -13,12 +15,12 @@
             document.getElementById("diviCount").innerHTML = "Number of divi earned: " + nDivi;
         });
 
-        $.get('https://siegeworlds-320f73534b59.herokuapp.com/api/dau', result => {
+        $.get(API_BASE + '/api/dau', result => {
             // Update the specific element with daily active users
             document.getElementById("dau").innerHTML = "Users (today): " + result.length;
         });
 
-        $.get('https://siegeworlds-320f73534b59.herokuapp.com/api/mau', result => {
+        $.get(API_BASE + '/api/mau', result => {
             // Update the specific element with monthly active users
             document.getElementById("mau").innerHTML = "Monthly users: " + result.length;
         });

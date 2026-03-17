@@ -25,8 +25,10 @@
     </div>
 
     <script type="text/javascript">
+        const API_BASE = <?php echo json_encode($GLOBALS['API_BASE'] ?? ''); ?>;
+
         function loadStats(callback) {
-            $.get('https://siegeworlds-320f73534b59.herokuapp.com/api/itemcounts', result => {
+            $.get(API_BASE + '/api/itemcounts', result => {
                 // Select the table body where the rows will be added
                 const tableBody = document.querySelector('#itemCountsTable tbody');
 

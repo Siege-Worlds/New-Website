@@ -36,9 +36,11 @@
 <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
 
 <script type="text/javascript">
+    const API_BASE = <?php echo json_encode($GLOBALS['API_BASE'] ?? ''); ?>;
+
     function loadExchangeLogs() {
         var totalVolume = 0;
-        $.get('https://siegeworlds-320f73534b59.herokuapp.com/api/exchangelogs', result => {
+        $.get(API_BASE + '/api/exchangelogs', result => {
             var highscoreString = '<tbody id="hsdata">';
             for (let i = result.length - 1; i >= 0; i--) {
                 highscoreString = highscoreString.concat(`

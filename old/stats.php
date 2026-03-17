@@ -15,8 +15,10 @@
 </head>
 </body>
 <script type="text/javascript">
+    const API_BASE = <?php echo json_encode($GLOBALS['API_BASE'] ?? ''); ?>;
+
     function loadStats(callback) {
-        $.get('https://siegeworlds-320f73534b59.herokuapp.com/api/usercount', result => {
+        $.get(API_BASE + '/api/usercount', result => {
             var nPlayers = result.user_count;
             var nKills = result.total_monster_kills;
             var nDivi = result.total_divi_earned / 100;
@@ -27,14 +29,14 @@
             document.write("number of divi earned: " + nDivi + "<br>");
         });
 
-        $.get('https://siegeworlds-320f73534b59.herokuapp.com/api/dau', result => {
+        $.get(API_BASE + '/api/dau', result => {
 
 
             //print the stats to html
             document.write("Users (today): " + result.length + "<br>");
         });
 
-        $.get('https://siegeworlds-320f73534b59.herokuapp.com/api/mau', result => {
+        $.get(API_BASE + '/api/mau', result => {
 
 
             //print the stats to html

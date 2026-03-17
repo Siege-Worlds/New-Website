@@ -12,6 +12,8 @@
     ?>
 
     <script type="text/javascript">
+        const API_BASE = <?php echo json_encode($GLOBALS['API_BASE'] ?? ''); ?>;
+
         var leaderboardData = [];
         var currentSort = 'total_kills';
 
@@ -42,19 +44,19 @@
             for (var i = 0; i < leaderboardData.length; i++) {
                 var row = leaderboardData[i];
                 var safeUsername = row.username.replace(/['"<>&]/g, '');
-                html += '<tr onclick="window.location.href=\'leaderboards.php?username=' + encodeURIComponent(safeUsername) + '\';">'
-                    + '<td>' + (i + 1) + '</td>'
-                    + '<td>' + capitalizeFirstLetter(safeUsername) + '</td>'
-                    + '<td>' + numberWithCommas(row.total_kills || 0) + '</td>'
-                    + '<td>' + numberWithCommas(row.total_points || 0) + '</td>'
-                    + '</tr>';
+                html += '<tr onclick="window.location.href=\'leaderboards.php?username=' + encodeURIComponent(safeUsername) + '\';">' +
+                    '<td>' + (i + 1) + '</td>' +
+                    '<td>' + capitalizeFirstLetter(safeUsername) + '</td>' +
+                    '<td>' + numberWithCommas(row.total_kills || 0) + '</td>' +
+                    '<td>' + numberWithCommas(row.total_points || 0) + '</td>' +
+                    '</tr>';
             }
             html += '</tbody>';
             $('#hsdata').replaceWith(html);
         }
 
         function loadLeaderboard() {
-            $.get('https://siegeworlds-320f73534b59.herokuapp.com/api/highscore', function(result) {
+            $.get(API_BASE + '/api/highscore', function(result) {
                 leaderboardData = [];
                 for (var i = 0; i < result.length; i++) {
                     if (result[i].total_kills != null && result[i].total_kills > 0) {
@@ -70,24 +72,24 @@
         }
 
         function searchPlayer(username) {
-            $.get('https://siegeworlds-320f73534b59.herokuapp.com/api/highscoresearch/' + encodeURIComponent(username), function(result) {
+            $.get(API_BASE + '/api/highscoresearch/' + encodeURIComponent(username), function(result) {
                 if (!result || !result.username) {
                     $('#hstable').replaceWith('<p id="hstable" style="text-align:center; padding:2rem;">Player not found.</p>');
                     return;
                 }
                 var name = capitalizeFirstLetter(result.username);
                 var totalGames = parseInt(result.total_games_won || 0) + parseInt(result.total_games_lost || 0);
-                var html = '<table id="hstable" class="">'
-                    + '<thead><tr><th>Stat</th><th>' + name + '</th></tr></thead>'
-                    + '<tbody id="hsdata">'
-                    + '<tr><td>Gameplay Hours</td><td>' + parseFloat((result.total_gameplay_time || 0) / 60).toFixed(1) + '</td></tr>'
-                    + '<tr><td>Total Kills</td><td>' + numberWithCommas(result.total_kills || 0) + '</td></tr>'
-                    + '<tr><td>Headshot Streak</td><td>' + numberWithCommas(result.headshot_streak || 0) + '</td></tr>'
-                    + '<tr><td>Accuracy</td><td>' + parseFloat(result.accuracy || 0).toFixed(2) + '%</td></tr>'
-                    + '<tr><td>Average Game Damage</td><td>' + numberWithCommas(result.average_damage || 0) + '</td></tr>'
-                    + '<tr><td>Average Game Kills</td><td>' + numberWithCommas(result.average_kills || 0) + '</td></tr>'
-                    + '<tr><td>Total Games Played</td><td>' + numberWithCommas(totalGames) + '</td></tr>'
-                    + '</tbody></table>';
+                var html = '<table id="hstable" class="">' +
+                    '<thead><tr><th>Stat</th><th>' + name + '</th></tr></thead>' +
+                    '<tbody id="hsdata">' +
+                    '<tr><td>Gameplay Hours</td><td>' + parseFloat((result.total_gameplay_time || 0) / 60).toFixed(1) + '</td></tr>' +
+                    '<tr><td>Total Kills</td><td>' + numberWithCommas(result.total_kills || 0) + '</td></tr>' +
+                    '<tr><td>Headshot Streak</td><td>' + numberWithCommas(result.headshot_streak || 0) + '</td></tr>' +
+                    '<tr><td>Accuracy</td><td>' + parseFloat(result.accuracy || 0).toFixed(2) + '%</td></tr>' +
+                    '<tr><td>Average Game Damage</td><td>' + numberWithCommas(result.average_damage || 0) + '</td></tr>' +
+                    '<tr><td>Average Game Kills</td><td>' + numberWithCommas(result.average_kills || 0) + '</td></tr>' +
+                    '<tr><td>Total Games Played</td><td>' + numberWithCommas(totalGames) + '</td></tr>' +
+                    '</tbody></table>';
                 $('#hstable').replaceWith(html);
             });
         }
@@ -109,20 +111,24 @@
             position: relative;
             padding-right: 1.2em;
         }
+
         #hstable thead th.sortable:hover {
             color: #fff;
             cursor: pointer;
         }
+
         #hstable thead th.sortable::after {
             content: '▼';
             font-size: 0.6em;
             margin-left: 0.4em;
             opacity: 0.3;
         }
+
         #hstable thead th.sort-active::after {
             opacity: 1;
             color: #fff;
         }
+
         header.header .header-brand img {
             width: 175px;
         }

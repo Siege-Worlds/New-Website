@@ -48,6 +48,8 @@
 
 
     <script>
+        const API_BASE = <?php echo json_encode($GLOBALS['API_BASE'] ?? ''); ?>;
+
         async function verifyUser() {
             //get username from url params
             const urlParams = new URLSearchParams(window.location.search);
@@ -56,7 +58,7 @@
 
 
             const result = await (await fetch(
-                'https://siegeworlds-320f73534b59.herokuapp.com/api/verify', {
+                API_BASE + '/api/verify', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',

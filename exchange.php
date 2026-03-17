@@ -10,7 +10,7 @@
     <script type="text/javascript">
         function loadExchangeLogs() {
             var totalVolume = 0;
-            $.get('https://siegeworlds-320f73534b59.herokuapp.com/api/exchangelogs', result => {
+            $.get($API_BASE + '/api/exchangelogs', result => {
                 var highscoreString = '<tbody id="hsdata">';
                 //result = result.sort(orderByKills)
                 for (let i = result.length - 1; i >= 0; i--) {

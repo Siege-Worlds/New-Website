@@ -1,5 +1,7 @@
 <?php
 
+$API_BASE = 'http://3.134.5.187:8080';
+
 function exchange_logs_form()
 {
     include 'admin/a_exchange_logs_form.php';

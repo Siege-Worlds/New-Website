@@ -11,8 +11,10 @@
 <body>
 
     <script type="text/javascript">
+        const API_BASE = <?php echo json_encode($GLOBALS['API_BASE'] ?? ''); ?>;
+
         function loadStats(callback) {
-            $.get('https://siegeworlds-320f73534b59.herokuapp.com/api/itemcounts', result => {
+            $.get(API_BASE + '/api/itemcounts', result => {
                 //print the array
                 document.write("<table>");
 

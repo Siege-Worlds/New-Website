@@ -32,9 +32,11 @@
     </div>
 
     <script>
+        const API_BASE = <?php echo json_encode($GLOBALS['API_BASE'] ?? ''); ?>;
+
         // Function to load Challenge Mode Logs
         function loadChallengeModeLogs() {
-            $.get('https://siegeworlds-320f73534b59.herokuapp.com/api/challengemodelogs', function(result) {
+            $.get(API_BASE + '/api/challengemodelogs', function(result) {
                 // Ensure the table body is cleared
                 $('#challengeModeTable').empty();
 

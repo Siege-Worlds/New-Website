@@ -42,9 +42,11 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
+        const API_BASE = <?php echo json_encode($GLOBALS['API_BASE'] ?? ''); ?>;
+
         // Function to fetch daily signups from the Node.js API
         function loadDailySignups() {
-            $.get('https://siegeworlds-320f73534b59.herokuapp.com/api/dailysignups', function(result) {
+            $.get(API_BASE + '/api/dailysignups', function(result) {
                 // Assuming result is an array of objects with "date" and "signups" fields
                 const labels = result.map(item => item.date);
                 const data = result.map(item => item.signups);
@@ -77,7 +79,7 @@
 
         // Function to load new users and display them in the table
         function loadNewUsers() {
-            $.get('https://siegeworlds-320f73534b59.herokuapp.com/api/newusers', function(result) {
+            $.get(API_BASE + '/api/newusers', function(result) {
                 // Reverse the result array to display newest users first
                 const reversedResult = result.reverse();
                 const tableBody = $('#newUsersTable tbody');
