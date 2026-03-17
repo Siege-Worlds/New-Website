@@ -28,8 +28,8 @@
         }
 
         .unity-mobile #unity-canvas {
-            # width: 100%;
-            # height: 100%
+            width: 100%;
+            height: 100%
         }
 
         #unity-loading-bar {
@@ -193,13 +193,12 @@
         </div>
     </div>
 
+    <footer class="section bg-dark">
+
+        <?php footer_copyright(); ?>
+
+    </footer>
+
 </body>
-
-<footer class="section bg-dark">
-
-
-    <?php footer_copyright(); ?>
-
-</footer>
 
 </html>

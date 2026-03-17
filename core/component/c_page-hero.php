@@ -20,7 +20,7 @@
                     <a href="https://discord.com/invite/siegeworlds" class="button is-outline is-large">
                         <span>Join our Discord</span>
                     </a>
-                    <a href="#" class="button is-outline is-large">
+                    <a href="https://t.me/siegeworlds" class="button is-outline is-large">
                         <span>Join our Telegram</span>
                     </a>
                 </div>

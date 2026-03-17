@@ -26,7 +26,7 @@
             <div class="companion-container">
                 <div class="text-container">
                     <h1>
-                        <?php echo "Sign-Up"; ?></span>
+                        <?php echo "Sign-Up"; ?>
                     </h1>
                     <p>
                         <?php echo 'Siege Worlds is free to play, you can create your account and instantly start earning rewards from our play to earn ecosystem.'; ?>
@@ -48,12 +48,12 @@
         </div>
     </div>
 
-</body>
+    <footer class="section bg-dark">
 
-<footer class="section bg-dark">
+        <?php footer_branding(); ?>
+        <?php footer_copyright(); ?>
 
-    <?php footer_branding(); ?>
-    <?php footer_copyright(); ?>
+    </footer>
 
     <script>
         document.getElementById('signup-button').addEventListener('click', function() {
@@ -68,6 +68,7 @@
 
             if (!isValidUsername($('#user1').val())) {
                 alert("username can only contain characters a-z 0-9 _");
+                return;
             }
 
             const queryString = window.location.search;
@@ -78,7 +79,7 @@
 
             if ($('#user1').val().length < 1) {
                 alert("Error: No username entered.")
-            } else if ($('#pass1').val().length < 2) {
+            } else if ($('#pass1').val().length < 8) {
                 alert("Error: No password entered.")
             } else if ($('#email1').val().length < 5) {
                 alert("Error: No email entered.")
@@ -101,12 +102,12 @@
                     alert("Username already exists. Please try again")
                 } else {
                     alert("Your account has been created.")
-                    window.location.replace("http://www.siegeworlds.com/account_created.php");
+                    window.location.replace("https://www.siegeworlds.com/account_created.php");
                 }
             }
         }
     </script>
 
-</footer>
+</body>
 
 </html>

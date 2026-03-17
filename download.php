@@ -24,7 +24,7 @@
             <div class="companion-container">
                 <div class="text-container">
                     <h1>
-                        <?php echo "Download"; ?></span>
+                        <?php echo "Download"; ?>
                     </h1>
                     <p>
                         <?php echo 'Siege Worlds is free to play, you can download our game client version 4.3.0 here.'; ?>
@@ -62,15 +62,13 @@
         </div>
     </div>
 
+    <footer class="section bg-dark">
+
+        <?php footer_branding(); ?>
+        <?php footer_copyright(); ?>
+
+    </footer>
+
 </body>
-
-<footer class="section bg-dark">
-
-    <?php footer_branding(); ?>
-    <?php footer_copyright(); ?>
-
-
-
-</footer>
 
 </html>

@@ -20,8 +20,8 @@
 <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
-<meta name="msapplication-TileColor" content="CD412B">
-<meta name="theme-color" content="CD412B">
+<meta name="msapplication-TileColor" content="#CD412B">
+<meta name="theme-color" content="#CD412B">
 
 
 <link rel="stylesheet" href="css/style.css" />
@@ -31,29 +31,24 @@
 
 
 <!-- Primary Meta Tags -->
-<title>Siege Worlds - A web3 powered battlegound</title>
-<meta name="title" content="Siege Worlds - A web3 powered battlegound" />
+<title>Siege Worlds - A web3 powered battleground</title>
+<meta name="title" content="Siege Worlds - A web3 powered battleground" />
 <meta name="description" content="Strategic combat meets crypto-powered rewards, challenging players to conquer hordes of monsters, forge legendary weapons, and trade their way to victory" />
-
-<meta property="og:title" content="Siege Worlds">
-<meta property="og:image" content="/img/226.jpeg">
-<meta property="og:description" content="Strategic combat meets crypto-powered rewards, challenging players to conquer hordes of monsters, forge legendary weapons, and trade their way to victory.">
-<meta property="og:url" content="https://siegeworlds.com">
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://www.siegeworlds.com/" />
-<meta property="og:title" content="Siege Worlds - A web3 powered battlegound" />
+<meta property="og:title" content="Siege Worlds - A web3 powered battleground" />
 <meta property="og:description" content="Strategic combat meets crypto-powered rewards, challenging players to conquer hordes of monsters, forge legendary weapons, and trade their way to victory" />
-<meta property="og:image" content="/img/226.jpeg" />
+<meta property="og:image" content="https://www.siegeworlds.com/img/226.jpeg" />
 
 <!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:domain" content="siegeworlds.com/" />
-<meta property="twitter:url" content="https://siegeworlds.com">
-<meta property="twitter:title" content="Siege Worlds - A web3 powered battlegound" />
-<meta property="twitter:description" content="Strategic combat meets crypto-powered rewards, challenging players to conquer hordes of monsters, forge legendary weapons, and trade their way to victory" />
-<meta property="twitter:image" content="https://siegeworlds.com/img/226.jpeg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:domain" content="siegeworlds.com" />
+<meta name="twitter:url" content="https://www.siegeworlds.com">
+<meta name="twitter:title" content="Siege Worlds - A web3 powered battleground" />
+<meta name="twitter:description" content="Strategic combat meets crypto-powered rewards, challenging players to conquer hordes of monsters, forge legendary weapons, and trade their way to victory" />
+<meta name="twitter:image" content="https://www.siegeworlds.com/img/226.jpeg" />
 
 <!-- Meta Tags Generated with https://metatags.io -->
 

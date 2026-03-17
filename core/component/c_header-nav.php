@@ -8,9 +8,9 @@
             <a href="#"><i class="fa-brands fa-telegram"></i></a>
             <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
             <a href="#"><i class="fa-brands fa-youtube"></i></a>
-            <a href="http://discord.gg/siegeworlds"><i class="fa-brands fa-discord"></i></a>
+            <a href="https://discord.gg/siegeworlds"><i class="fa-brands fa-discord"></i></a>
             <a href="signup.php">Create account</a>
-            <a href="highscores.php">High Scores</a>
+            <a href="leaderboards.php">Leaderboards</a>
             <a class="buy-button" href="download.php">Download</a>
             <a class="buy-button" href="#">Learn & Earn</a>
         </div> -->
@@ -18,24 +18,23 @@
         <div class="header-navigation" id="myMenu">
           <div class="menu-logo">
             <a href="index.php" class="header-brand">
-              <img src="img/logo-sw-blue.jpg" alt="Marque Logo" />
+              <img src="img/sw_logo_800px.webp" alt="Siege Worlds Logo" />
             </a>
           </div>
           <div class="menu-options">
             <div class="dropdown">
               <button onclick="myFunction()" class="dropbtn">Join Us +</button>
               <div id="myDropdown" class="dropdown-content">
-                <a href="#"><i class="fa-brands fa-twitch"></i> Twitch</a>
-                <a href="#"><i class="fa-brands fa-telegram"></i> Telegram</a>
-                <a href="#"><i class="fa-brands fa-x-twitter"></i> X</a>
+                <a href="https://www.twitch.tv/directory/game/Siege%20Worlds" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-twitch"></i> Twitch</a>
+                <a href="https://t.me/siegeworlds" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-telegram"></i> Telegram</a>
+                <a href="https://x.com/siege_worlds" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i> X</a>
                 <a href="https://www.youtube.com/@SiegeWorlds"><i class="fa-brands fa-youtube"></i> YouTube</a>
-                <a href="http://discord.gg/siegeworlds" target="_blank" rel="nofollow"><i class="fa-brands fa-discord"></i> Discrod</a>
+                <a href="https://discord.gg/siegeworlds" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-discord"></i> Discord</a>
               </div>
             </div>
-            <a href="signup.php">Create account</a>
-            <a href="highscores.php">High Scores</a>
+            <a href="leaderboards.php">Leaderboards</a>
             <a class="buy-button" href="download.php">Download</a>
-            <a class="buy-button button-green" href="#">Learn & Earn</a>
+            <a class="buy-button button-green" href="signup.php">Create Account</a>
           </div>
           <a href="javascript:void(0);" class="toggle-menu" onclick="myMenu()">&#9776;</a>
         </div>

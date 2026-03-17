@@ -27,7 +27,8 @@
                         <?php echo "Scan the QR code to connect your wallet and start earning as you play."; ?>
                     </p>
                     <?php
-                    echo '<img src="https://lg.cr/qr/gameshare/telegram/' . $_GET['user'] . '" width="300" />';
+                    $user = isset($_GET['user']) ? htmlspecialchars($_GET['user'], ENT_QUOTES, 'UTF-8') : '';
+                    echo '<img src="https://lg.cr/qr/gameshare/telegram/' . $user . '" width="300" />';
                     ?>
 
 
@@ -38,13 +39,13 @@
         </div>
     </div>
 
+    <footer class="section bg-dark">
+
+        <?php footer_branding(); ?>
+        <?php footer_copyright(); ?>
+
+    </footer>
+
 </body>
-
-<footer class="section bg-dark">
-
-    <?php footer_branding(); ?>
-    <?php footer_copyright(); ?>
-
-</footer>
 
 </html>

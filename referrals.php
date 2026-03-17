@@ -140,7 +140,7 @@
                 return;
             }
 
-            const referralLink = `http://www.siegeworlds.com/signup.php?ref=${encodeURIComponent(username)}`;
+            const referralLink = `https://www.siegeworlds.com/signup.php?ref=${encodeURIComponent(username)}`;
             document.getElementById("referralLink").value = referralLink;
             document.getElementById("referralLinkContainer").style.display = "block";
         }

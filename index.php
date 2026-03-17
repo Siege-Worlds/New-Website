@@ -19,6 +19,8 @@
 
     <?php highlight_stats(); ?>
 
+    <?php trailer_video(); ?>
+
     <?php quote(); ?>
 
 
@@ -43,13 +45,12 @@
 
 
     <script src="/js/index.js"></script>
+    <script>
+        document.getElementById('opendivigo').addEventListener('click', function() {
+            //open telegram and message @LWBOT
+            window.open('https://t.me/LightningWorksBot', '_blank');
+        });
+    </script>
 </body>
-
-<script>
-    document.getElementById('opendivigo').addEventListener('click', function() {
-        //open telegram and message @LWBOT
-        window.open('https://t.me/LightningWorksBot', '_blank');
-    });
-</script>
 
 </html>

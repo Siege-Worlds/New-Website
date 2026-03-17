@@ -1,5 +1,7 @@
 <?php
 $Address = isset($_GET["address"])? $_GET["address"]: "";
+$AddressHTML = htmlspecialchars($Address, ENT_QUOTES, 'UTF-8');
+$AddressJS = json_encode($Address);
 ?>
 <!DOCTYPE html>
 <html>
@@ -20,7 +22,7 @@ $Address = isset($_GET["address"])? $_GET["address"]: "";
                     <h1>Enter your Polygon / MATIC address!</h1>
                     <p id="LoadingProgress"></p>
                     <div class="select">
-	                    <input class="input-address" type="text" size="30" id="Address" name="Address" value="<?php print($Address); ?>" placeholder="Address"/> 
+	                    <input class="input-address" type="text" size="30" id="Address" name="Address" value="<?php print($AddressHTML); ?>" placeholder="Address"/> 
                     </div>
                     <div><button class="button" type="button" style="background-color: rgb(103, 61, 255);margin-top: 26px;margin-left: 100px;"  onclick="loadNFTs()" >Search</button></div>
                     <div id="NFTListData"></div>
@@ -34,7 +36,7 @@ $Address = isset($_GET["address"])? $_GET["address"]: "";
         <script type="text/javascript" src="js/web3.min.js"></script>
         <script type="text/javascript" src="js/metaMask.js"></script>
         <script type="text/javascript">
-            let address = "<?php print($Address); ?>";
+            let address = <?php echo $AddressJS; ?>;
             let nftList = [];
                     
            	const showScreen = (newScreen) => {

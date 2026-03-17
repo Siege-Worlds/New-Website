@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Admin Login</title>
 
     <?php
     session_start();
@@ -20,6 +20,7 @@
 
         // Check if the credentials are correct
         if ($username === $admin_username && $password === $admin_password) {
+            session_regenerate_id(true);
             $_SESSION['admin_logged_in'] = true;
             header('Location: admin_dashboard.php'); // Redirect to the admin dashboard
             exit;
@@ -29,7 +30,7 @@
     }
     ?>
 
-    <title>PlayAndEarn - Admin Login</title>
+
 </head>
 
 <body>

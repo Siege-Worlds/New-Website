@@ -8,7 +8,7 @@
         </div>
 
         <div class="featured-blog">
-            <a href="news.php">
+            <a href="#">
                 <div class="featured-blog-image">
                     <img src="img/226.jpeg" alt="Header" />
                 </div>

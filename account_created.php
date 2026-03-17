@@ -18,13 +18,13 @@
 
     <?php content_image_right("Success", "", "Your account has been created, please check your emails and verify your email address.", "Play Siege Worlds", "download.php") ?>
 
+    <footer class="section bg-dark">
+
+        <?php footer_branding(); ?>
+        <?php footer_copyright(); ?>
+
+    </footer>
+
 </body>
-
-<footer class="section bg-dark">
-
-    <?php footer_branding(); ?>
-    <?php footer_copyright(); ?>
-
-</footer>
 
 </html>

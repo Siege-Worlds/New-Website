@@ -14,6 +14,11 @@
 
 
     <!-- Initialize the JS-SDK -->
+    <script>
+        function resultMessage(msg) {
+            document.getElementById("result-message").innerHTML = msg;
+        }
+    </script>
     <script
         src="https://www.paypal.com/sdk/js?client-id=AVdryV4m8qlHtjLjQxkQjA1_XQeH0gUeHThcPzyGie7OsQAoZmiEFcKlKDC-kHsQJEnX7IO0om_L6pcC&buyer-country=US&currency=USD&components=buttons&enable-funding=venmo,paylater,card"
         data-sdk-integration-source="developer-studio"></script>

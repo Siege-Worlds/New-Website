@@ -11,11 +11,11 @@
                     </svg>
 
                 </a-->
-                <a href="#" class="social-button" target="_blank" rel="nofollow"><i class="fa-brands fa-twitch"></i></a>
-                <a href="#" class="social-button" target="_blank" rel="nofollow"><i class="fa-brands fa-telegram"></i></a>
-                <a href="#" class="social-button" target="_blank" rel="nofollow"><i class="fa-brands fa-x-twitter"></i></a>
-                <a href="https://www.youtube.com/@SiegeWorlds" class="social-button" target="_blank" rel="nofollow"><i class="fa-brands fa-youtube"></i></a>
-                <a href="http://discord.gg/siegeworlds" class="social-button" target="_blank" rel="nofollow"><i class="fa-brands fa-discord"></i></a>
+                <a href="https://www.twitch.tv/directory/game/Siege%20Worlds" class="social-button" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-twitch"></i></a>
+                <a href="https://t.me/siegeworlds" class="social-button" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-telegram"></i></a>
+                <a href="https://x.com/siege_worlds" class="social-button" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="https://www.youtube.com/@SiegeWorlds" class="social-button" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://discord.gg/siegeworlds" class="social-button" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-discord"></i></a>
                 <!--a href="https://www.tiktok.com/" class="social-button" target="_blank">
                     <svg width="32" height="32" viewBox="0 0 32 32" fill="#575350" xmlns="http://www.w3.org/2000/svg">
                         <g clip-path="url(#clip0_660_65)">

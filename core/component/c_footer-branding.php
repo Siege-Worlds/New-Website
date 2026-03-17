@@ -15,7 +15,7 @@
         <a class="footer-nav-link" href="index.php">
             Home
         </a>
-        <a class="footer-nav-link" href="news.php">
+        <a class="footer-nav-link" href="#">
             News
         </a>
         <a target="_blank" href="" class="footer-nav-link">

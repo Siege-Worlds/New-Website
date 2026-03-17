@@ -20,11 +20,6 @@ function quote()
     include 'component/c_quote.php';
 }
 
-function featured_blog()
-{
-    include 'component/c_featured-blog.php';
-}
-
 function content_center_button()
 {
     include 'component/c_content-center-button.php';
@@ -35,9 +30,9 @@ function content_image_right($title1, $title2, $bodytext, $button_text, $button_
     include 'component/c_content-image-right.php';
 }
 
-function news_content()
+function trailer_video()
 {
-    include 'component/c_news-content.php';
+    include 'component/c_trailer-video.php';
 }
 
 function image_section()
