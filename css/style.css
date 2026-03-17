@@ -2015,6 +2015,18 @@ header.header .header-navigation a {
     text-align: center;
     transition: color .2s ease;
 }
+.nav-stacked {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    float: left;
+}
+.nav-stacked a {
+    padding: 0 20px !important;
+    margin: 0 !important;
+    font-size: 0.9em;
+    line-height: 1.4;
+}
 header.header .header-navigation a.buy-button {
     background-color: #6a24fa;
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0);
@@ -2066,6 +2078,9 @@ header.header .header-navigation .dropdown .dropbtn {
     font-family: "Bebas Neue", sans-serif;
     font-size: 1.25rem;
     cursor: pointer;
+    text-align: center;
+    justify-content: center;
+    display: inline-flex;
 }
 header.header .header-navigation .dropdown-content {
     display: none;

@@ -8,10 +8,10 @@
     <style>@keyframes filmstrip-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}</style>
     <div class="container" style="position:relative;z-index:1;">
         <div class="quote-text">
-            <h1>“We aimed to craft a game that transforms players into cinematic heroes; envisioning a battle experience against massive hordes, reminiscent of the epic scenes found in Lord of the Rings.”</h1>
-
-            <a href="https://www.gamesinteractive.co.uk/" target="_blank" class="company">Geoff McCabe (Co-founder Games Interactive)</a>
+            <h1>Now featuring a new Starblind wave called Bleakrock Island, using lore from Alien Worlds and the Starblind comic series</h1>
         </div>
+    </div>
+    <img src="img/ash_thorn.webp" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:contain;z-index:3;pointer-events:none;" alt="Ash Thorn" />
     </div>
     <div class="dark-bar-pattern bottom flip"></div>
 </div>
