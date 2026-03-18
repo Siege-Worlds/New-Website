@@ -32,6 +32,11 @@ function content_image_right($title1, $title2, $bodytext, $button_text, $button_
     include 'component/c_content-image-right.php';
 }
 
+function partnerships()
+{
+    include 'component/c_partnerships.php';
+}
+
 function trailer_video()
 {
     include 'component/c_trailer-video.php';

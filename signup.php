@@ -33,10 +33,11 @@
                     </p>
 
                     <input class="hs-input" id="user1" style="width:400px;" type="text" placeholder="Username" name="username"> <br>
-                    <input class="hs-input" id="pass1" style="width:400px;" type="password" placeholder="Password" name="password"><br>
-                    <input class="hs-input" id="email1" style="width:400px;" type="text" placeholder="email" name="email"><br>
+                    <input class="hs-input" id="pass1" style="width:400px;" type="password" placeholder="Password (8+ characters)" name="password"><br>
+                    <input class="hs-input" id="pass2" style="width:400px;" type="password" placeholder="Confirm Password" name="password_confirm"><br>
+                    <input class="hs-input" id="email1" style="width:400px;" type="email" placeholder="Email" name="email"><br>
 
-
+                    <p id="signup-message" style="color:#ff4444;margin:0.5rem 0;"></p>
                     <a id="signup-button" class="button is-primary is-medium">Create Account</a>
 
 
@@ -66,26 +67,48 @@
             return /^[a-zA-Z0-9_]+$/.test(username);
         }
 
+        function showMessage(msg, isError) {
+            var el = document.getElementById('signup-message');
+            el.textContent = msg;
+            el.style.color = isError ? '#ff4444' : '#44ff44';
+        }
+
         async function signupbutton() {
+            var btn = document.getElementById('signup-button');
+            showMessage('', false);
 
             if (!isValidUsername($('#user1').val())) {
-                alert("username can only contain characters a-z 0-9 _");
+                showMessage('Username can only contain characters a-z, 0-9, and _', true);
                 return;
             }
 
-            const queryString = window.location.search;
-            console.log(queryString);
-            const urlParams = new URLSearchParams(queryString);
-            const ref = urlParams.get('ref');
-            console.log(ref);
+            if ($('#user1').val().length < 2) {
+                showMessage('Username must be at least 2 characters.', true);
+                return;
+            }
 
-            if ($('#user1').val().length < 1) {
-                alert("Error: No username entered.")
-            } else if ($('#pass1').val().length < 8) {
-                alert("Error: No password entered.")
-            } else if ($('#email1').val().length < 5) {
-                alert("Error: No email entered.")
-            } else {
+            if ($('#pass1').val().length < 8) {
+                showMessage('Password must be at least 8 characters.', true);
+                return;
+            }
+
+            if ($('#pass1').val() !== $('#pass2').val()) {
+                showMessage('Passwords do not match.', true);
+                return;
+            }
+
+            if ($('#email1').val().length < 5 || $('#email1').val().indexOf('@') === -1) {
+                showMessage('Please enter a valid email address.', true);
+                return;
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const ref = urlParams.get('ref');
+
+            btn.textContent = 'Creating Account...';
+            btn.style.pointerEvents = 'none';
+
+            try {
                 const result = await (await fetch(
                     API_BASE + '/api/register', {
                         method: 'POST',
@@ -100,13 +123,20 @@
                             referral: ref
                         })
                     })).json()
-                if (result == false) {
-                    alert("Username already exists. Please try again")
+
+                if (result.success === true) {
+                    window.location.replace('account_created.php');
+                } else if (result.error) {
+                    showMessage(result.error, true);
                 } else {
-                    alert("Your account has been created.")
-                    window.location.replace("https://www.siegeworlds.com/account_created.php");
+                    showMessage('Username already exists. Please try again.', true);
                 }
+            } catch (e) {
+                showMessage('Connection error. Please try again later.', true);
             }
+
+            btn.textContent = 'Create Account';
+            btn.style.pointerEvents = 'auto';
         }
     </script>
 

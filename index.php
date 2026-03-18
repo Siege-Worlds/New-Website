@@ -32,6 +32,8 @@
 
     <?php content_image_right("Competitive", "Tournaments", "Join week-long tournaments, where the highest scorers emerge victorious, claiming cryptocurrency or exclusive NFT prizes.", "", ""); ?>
 
+    <?php partnerships(); ?>
+
     <!--?php image_section(); ?-->
 
 

@@ -15,7 +15,7 @@
         const API_BASE = <?php echo json_encode($GLOBALS['API_BASE'] ?? ''); ?>;
 
         var leaderboardData = [];
-        var currentSort = 'total_kills';
+        var currentSort = 'level';
 
         const numberWithCommas = x => {
             var parts = x.toString().split('.');
@@ -27,9 +27,30 @@
             return string.charAt(0).toUpperCase() + string.slice(1);
         }
 
+        function calculateLevel(kills, headshots, bullseyes) {
+            if (kills <= 0) return 1;
+            var hsRate = kills > 0 ? headshots / kills : 0;
+            var bsRate = kills > 0 ? bullseyes / kills : 0;
+            var multiplier = 1.0 + (hsRate * 1.5) + (bsRate * 4.0);
+            var effectiveScore = kills * multiplier;
+            var level = 1;
+            var threshold = 10;
+            var cumulative = 0;
+            while (cumulative + threshold <= effectiveScore) {
+                cumulative += threshold;
+                level++;
+                threshold = Math.round(threshold * 1.35);
+            }
+            return level;
+        }
+
         function sortBy(field) {
             currentSort = field;
-            leaderboardData.sort((a, b) => (b[field] || 0) - (a[field] || 0));
+            if (field === 'username') {
+                leaderboardData.sort((a, b) => a.username.localeCompare(b.username));
+            } else {
+                leaderboardData.sort((a, b) => (b[field] || 0) - (a[field] || 0));
+            }
             renderLeaderboard();
 
             // Update active header styling
@@ -46,9 +67,15 @@
                 var safeUsername = row.username.replace(/['"<>&]/g, '');
                 html += '<tr onclick="window.location.href=\'leaderboards.php?username=' + encodeURIComponent(safeUsername) + '\';">' +
                     '<td>' + (i + 1) + '</td>' +
-                    '<td>' + capitalizeFirstLetter(safeUsername) + '</td>' +
+                    '<td>' + (row.suspect ? '* ' : '') + capitalizeFirstLetter(safeUsername) + '</td>' +
+                    '<td>' + row.level + '</td>' +
                     '<td>' + numberWithCommas(row.total_kills || 0) + '</td>' +
-                    '<td>' + numberWithCommas(row.total_points || 0) + '</td>' +
+                    '<td>' + (row.total_damage < 0 ? 'OVERKILL' : numberWithCommas(row.total_damage || 0)) + '</td>' +
+                    '<td>' + numberWithCommas(row.horde_points || 0) + '</td>' +
+                    '<td>' + numberWithCommas(row.headshots || 0) + '</td>' +
+                    '<td>' + (row.head_pct).toFixed(1) + '%</td>' +
+                    '<td>' + numberWithCommas(row.bullseyes || 0) + '</td>' +
+                    '<td>' + (row.bull_pct).toFixed(1) + '%</td>' +
                     '</tr>';
             }
             html += '</tbody>';
@@ -60,10 +87,22 @@
                 leaderboardData = [];
                 for (var i = 0; i < result.length; i++) {
                     if (result[i].total_kills != null && result[i].total_kills > 0) {
+                        var kills = result[i].total_kills || 0;
+                        var headshots = result[i].total_headshots || 0;
+                        var bullseyes = result[i].total_bullseye || 0;
                         leaderboardData.push({
                             username: result[i].username,
-                            total_kills: result[i].total_kills || 0,
-                            total_points: result[i].total_points || 0
+                            total_kills: kills,
+                            total_damage: (result[i].total_damage || 0) < 0 ? -1 : (result[i].total_damage || 0),
+                            horde_points: result[i].horde_points || 0,
+                            headshots: headshots,
+                            bullseyes: bullseyes,
+                            total_hits: result[i].total_hits || 0,
+                            head_pct: (result[i].total_hits || 0) > 0 ? (headshots / result[i].total_hits) * 100 : 0,
+                            bull_pct: (result[i].total_hits || 0) > 0 ? (bullseyes / result[i].total_hits) * 100 : 0,
+                            level: calculateLevel(kills, headshots, bullseyes),
+                            total_games: result[i].total_games || 0,
+                            suspect: kills > 10000 && (headshots / kills) > 1.2 && (bullseyes / kills) > 0.07 && ((result[i].total_damage || 0) / kills) < 50
                         });
                     }
                 }
@@ -155,15 +194,27 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Username</th>
-                        <th scope="col" id="sort-total_kills" class="sortable sort-active" onclick="sortBy('total_kills')">Total Kills</th>
-                        <th scope="col" id="sort-total_points" class="sortable" onclick="sortBy('total_points')">Total Points</th>
+                        <th scope="col" id="sort-username" class="sortable" onclick="sortBy('username')">Username</th>
+                        <th scope="col" id="sort-level" class="sortable sort-active" onclick="sortBy('level')">Level</th>
+                        <th scope="col" id="sort-total_kills" class="sortable" onclick="sortBy('total_kills')">Total Kills</th>
+                        <th scope="col" id="sort-total_damage" class="sortable" onclick="sortBy('total_damage')">Total Damage</th>
+                        <th scope="col" id="sort-horde_points" class="sortable" onclick="sortBy('horde_points')">Horde Points</th>
+                        <th scope="col" id="sort-headshots" class="sortable" onclick="sortBy('headshots')">Headshots</th>
+                        <th scope="col" id="sort-head_pct" class="sortable" onclick="sortBy('head_pct')">Head%</th>
+                        <th scope="col" id="sort-bullseyes" class="sortable" onclick="sortBy('bullseyes')">Bullseyes</th>
+                        <th scope="col" id="sort-bull_pct" class="sortable" onclick="sortBy('bull_pct')">Bull%</th>
                     </tr>
                 </thead>
                 <tbody id="hsdata">
                     <tr>
                         <td></td>
                         <td>Loading Data...</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td></td>
                         <td></td>
                     </tr>
