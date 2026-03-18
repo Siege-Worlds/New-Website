@@ -16,13 +16,13 @@ jobs:
     - name: Get latest code
       uses: actions/checkout@v4
 
-    - name: Sync files via SFTP
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+    - name: Copy files via SFTP
+      uses: appleboy/scp-action@v0.1.7
       with:
-        server: ${{ secrets.FTP_SERVER }}
+        host: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        # These three lines are the "Magic Fix" for ECONNRESET
-        protocol: sftp
         port: 22
-        delete-destination: false
+        source: "."
+        target: "public_html" # <--- IMPORTANT: Change this to your server's folder name
+        rm: false             # Set to true if you want to delete old files first
