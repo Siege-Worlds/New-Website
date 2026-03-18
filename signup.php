@@ -1,19 +1,16 @@
+<?php
+require_once('core/core.php');
+if (!isset($_GET['agreed']) || $_GET['agreed'] !== '1') {
+    header('Location: terms-agreement.php');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
-
-
-    <?php
-
-
-
-    require_once('core/core.php');
-    head();
-    ?>
-
-
+    <?php head(); ?>
 
 </head>
 
@@ -29,13 +26,13 @@
                         <?php echo "Sign-Up"; ?>
                     </h1>
                     <p>
-                        <?php echo 'Siege Worlds is free to play, you can create your account and instantly start earning rewards from our play to earn ecosystem.'; ?>
+                        <?php echo 'Siege Worlds is free to play. You can create your account now and soon start earning rewards from our play-and-earn ecosystem. Forge the weapons you get from killing monsters, and sell them to other players for crypto!'; ?>
                     </p>
 
-                    <input class="hs-input" id="user1" style="width:400px;" type="text" placeholder="Username" name="username"> <br>
-                    <input class="hs-input" id="pass1" style="width:400px;" type="password" placeholder="Password (8+ characters)" name="password"><br>
-                    <input class="hs-input" id="pass2" style="width:400px;" type="password" placeholder="Confirm Password" name="password_confirm"><br>
-                    <input class="hs-input" id="email1" style="width:400px;" type="email" placeholder="Email" name="email"><br>
+                    <input class="hs-input" id="user1" style="width:100%;max-width:400px;display:block;" type="text" placeholder="Username" name="username">
+                    <input class="hs-input" id="pass1" style="width:100%;max-width:400px;display:block;" type="password" placeholder="Password (8+ characters)" name="password">
+                    <input class="hs-input" id="pass2" style="width:100%;max-width:400px;display:block;" type="password" placeholder="Confirm Password" name="password_confirm">
+                    <input class="hs-input" id="email1" style="width:100%;max-width:400px;display:block;" type="email" placeholder="Email" name="email">
 
                     <p id="signup-message" style="color:#ff4444;margin:0.5rem 0;"></p>
                     <a id="signup-button" class="button is-primary is-medium">Create Account</a>

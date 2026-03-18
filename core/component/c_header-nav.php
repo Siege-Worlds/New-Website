@@ -37,7 +37,7 @@
               <a href="https://medium.com/siege-worlds/beginners-guide-to-playing-siege-worlds-1725cec0e3b3" target="_blank">How to Play</a>
             </div>
             <a class="buy-button" href="download.php">Download</a>
-            <a class="buy-button button-green" href="signup.php">Create Account</a>
+            <a class="buy-button button-green" href="terms-agreement.php">Create Account</a>
           </div>
           <a href="javascript:void(0);" class="toggle-menu" onclick="myMenu()">&#9776;</a>
         </div>

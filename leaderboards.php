@@ -168,9 +168,6 @@
             color: #fff;
         }
 
-        header.header .header-brand img {
-            width: 175px;
-        }
     </style>
 
 

@@ -7,7 +7,9 @@
     require_once('core/core.php');
     head();
     ?>
-
+    <style>
+        header.header .header-brand img { width: 350px; }
+    </style>
 </head>
 
 <body>
