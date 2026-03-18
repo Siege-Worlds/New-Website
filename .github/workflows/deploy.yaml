@@ -3,14 +3,12 @@ name: Deploy Website
 on:
   push:
     branches:
-      - main  # Only deploys when you push to the main branch
+      - main
 
 jobs:
   web-deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    
-    # Opt-in to Node 24 early to fix the deprecation error
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
@@ -18,20 +16,13 @@ jobs:
     - name: Get latest code
       uses: actions/checkout@v4
 
-    - name: Sync files to server
+    - name: Sync files via SFTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
-        # Credentials stored in GitHub Secrets
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        
-        # Connection settings to prevent ECONNRESET and Timeouts
-        protocol: ftp
-        port: 21
-        ftp-ssl: true    # Uses FTPS (secure) if available
-        parallel: 1      # Uploads one file at a time (much more stable)
-        
-        # Optional: If your site lives in a subfolder like public_html, 
-        # uncomment the line below and change the path:
-        # server-dir: ./public_html/
+        # These three lines are the "Magic Fix" for ECONNRESET
+        protocol: sftp
+        port: 22
+        delete-destination: false
