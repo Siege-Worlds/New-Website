@@ -16,16 +16,22 @@ jobs:
     - name: Get latest code
       uses: actions/checkout@v4
 
-    - name: Deploy via SFTP
-      uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+    - name: FTP Deploy
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
-        username: ${{ secrets.FTP_USERNAME }}
         server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        port: 22
-        local_path: './*'
-        # Since you are jailed to httpdocs, we use / to represent 'here'
-        remote_path: '/'
-        # This excludes git metadata which often causes permission errors
-        sftp_only: true
-        ignore_node_modules: true
+        # We are going back to basics but forcing these specific flags:
+        protocol: ftp
+        port: 21
+        ftp-ssl: true
+        # This is key: since you are jailed, leave server-dir blank or use ./
+        server-dir: ./ 
+        # Prevents the 'Data Socket' crash by forcing single-stream
+        parallel: 1 
+        # Ignore the metadata that usually causes permission errors
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/node_modules/**
