@@ -15,6 +15,8 @@ jobs:
     steps:
     - name: Get latest code
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0 # Fetches all history so it can compare changes better
 
     - name: FTP Deploy
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -22,16 +24,18 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        # We are going back to basics but forcing these specific flags:
         protocol: ftp
         port: 21
         ftp-ssl: true
-        # This is key: since you are jailed, leave server-dir blank or use ./
-        server-dir: ./ 
-        # Prevents the 'Data Socket' crash by forcing single-stream
-        parallel: 1 
-        # Ignore the metadata that usually causes permission errors
+        server-dir: ./
+        # 1. THROTTLE: Only 1 connection at a time to prevent server kicks
+        parallel: 1
+        # 2. OPTIMIZE: Only upload files that actually changed
+        dangerous-clean-slate: false
+        # 3. EXCLUDE: Don't upload bulky junk you don't need on the server
         exclude: |
           **/.git*
           **/.git*/**
           **/node_modules/**
+          README.md
+          .gitignore
