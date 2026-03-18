@@ -24,5 +24,5 @@ jobs:
         password: ${{ secrets.FTP_PASSWORD }}
         port: 22
         source: "."
-        target: "public_html" # <--- IMPORTANT: Change this to your server's folder name
+        target: "." # <--- IMPORTANT: Change this to your server's folder name
         rm: false             # Set to true if you want to delete old files first
