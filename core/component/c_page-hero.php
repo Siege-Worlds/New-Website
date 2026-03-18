@@ -11,7 +11,7 @@
     <div class="hero-body">
         <div class="container">
             <div class="body-info">
-                <h1 class="title">Defeat the hsordes</h1>
+                <h1 class="title">Defeat the hordes</h1>
                 <p>Strategic combat meets crypto-powered rewards, challenging players to conquer hordes of monsters, forge legendary weapons, and trade their way to victory.</p>
                 <div class="buttons">
                     <a href="download.php" class="button is-primary is-large">
