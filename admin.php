@@ -13,6 +13,7 @@
     // Dummy credentials for example (use a database in production)
     $admin_username = 'jake';
     $admin_password = 'rabiddog';
+	
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $username = $_POST['username'];
