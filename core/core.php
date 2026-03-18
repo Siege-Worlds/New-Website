@@ -1,6 +1,6 @@
 <?php
 
-$API_BASE = 'http://3.134.5.187:8080';
+$API_BASE = 'https://siegeworlds-f987f035dda9.herokuapp.com';
 
 function head()
 {
