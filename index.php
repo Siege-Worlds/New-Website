@@ -28,7 +28,7 @@
 
     <?php roadmap(); ?>
 
-
+    <?php chat_shiyang(); ?>
 
     <?php content_center_button(); ?>
 

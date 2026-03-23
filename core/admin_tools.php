@@ -41,3 +41,8 @@ function challenge_mode_form()
 {
     include 'admin/a_challenge_mode_form.php';
 }
+
+function character_apis_form()
+{
+    include 'admin/a_character_apis_form.php';
+}

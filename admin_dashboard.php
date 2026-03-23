@@ -1,9 +1,9 @@
 <?php
-session_start();
+require_once('core/core.php');
 
-// Check if admin is logged in
-if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
-    header('Location: admin.php'); // Redirect to login if not logged in
+// Check if admin is logged in (SSO role or legacy hardcoded login)
+if (!is_admin()) {
+    header('Location: admin.php');
     exit;
 }
 ?>
@@ -66,6 +66,7 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
         <a href="admin_dashboard.php?form=itemprices">Item Prices</a>
         <a href="admin_dashboard.php?form=dailyusers">Daily Users</a>
         <a href="admin_dashboard.php?form=dailysignups">Daily Signups</a>
+        <a href="admin_dashboard.php?form=characterapis">Character APIs</a>
         <a href="admin_logout.php">Logout</a>
     </div>
 
@@ -119,6 +120,9 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
             daily_signups_form();
         }
 
+        if (isset($_GET['form']) && $_GET['form'] === 'characterapis') {
+            character_apis_form();
+        }
 
         ?>
     </div>

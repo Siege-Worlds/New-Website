@@ -2039,6 +2039,18 @@ header.header .header-navigation a.button-green:hover {
     background-color: #6eff7a !important;
     color: rgba(0,0,0,1);
 }
+header.header .header-navigation a.button-contest {
+    background-color: #ff8800;
+    color: #fff;
+    animation: contestPulse 2s ease-in-out infinite;
+}
+header.header .header-navigation a.button-contest:hover {
+    background-color: #ffaa44 !important;
+}
+@keyframes contestPulse {
+    0%, 100% { box-shadow: 0 0 5px rgba(255,136,0,0.3); }
+    50% { box-shadow: 0 0 15px rgba(255,136,0,0.6); }
+}
 header.header .header-navigation a.buy-button:hover {
     box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
     background-color: #7f4ae8;
@@ -6697,13 +6709,10 @@ span.tag {
 #hstable th {
     border-bottom-width: 1px;
     border-bottom-style: solid;
-    /* Set the border style (in this example, 'solid') */
     border-bottom-color: #DADADA70;
-    /* Set the color (replace #ff0000 with your desired color code) */
     padding: 8px;
-    /*set the text color to white*/
     color: white;
-
+    text-align: center;
 }
 
 #hstable tr {
@@ -6721,6 +6730,37 @@ span.tag {
     background-color: #6a24fa;
     color: white;
 
+}
+
+#coltable {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#coltable td,
+#coltable th {
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #DADADA70;
+    padding: 8px;
+    color: white;
+    text-align: center;
+}
+
+#coltable tr {
+    background-color: #212529;
+}
+
+#coltable tr:hover {
+    background-color: #101418;
+}
+
+#coltable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #6a24fa;
+    color: white;
 }
 
 .hs-body {
