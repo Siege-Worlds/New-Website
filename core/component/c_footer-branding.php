@@ -18,7 +18,7 @@
         <a class="footer-nav-link" href="#">
             News
         </a>
-        <a target="_blank" href="" class="footer-nav-link">
+        <a href="legal.php" class="footer-nav-link">
             Legal
         </a>
         <a href="referrals.php" class="footer-nav-link">
