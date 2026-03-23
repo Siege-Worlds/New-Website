@@ -1,10 +1,10 @@
 <?php
 $charFile = __DIR__ . '/../database/characters.json';
 $allChars = json_decode(file_get_contents($charFile), true) ?: [];
-$enabledChars = array_values(array_filter($allChars, fn($c) => $c['enabled'] && $c['api_key']));
+$enabledChars = array_values(array_filter($allChars, fn($c) => $c['enabled'] && ($c['chat_api_key'] ?? $c['api_key'] ?? '')));
 if (empty($enabledChars)) return;
 $defaultChar = $enabledChars[0];
-// Include API keys for iframe embed URL (required by the embed)
+// Include chat API keys for iframe embed URL (required by the embed)
 $jsChars = [];
 foreach ($enabledChars as $c) {
     $jsChars[] = [
@@ -12,7 +12,7 @@ foreach ($enabledChars as $c) {
         'name' => $c['name'],
         'image' => $c['image'],
         'intro' => $c['intro'],
-        'key' => $c['api_key']
+        'key' => $c['chat_api_key'] ?? $c['api_key'] ?? ''
     ];
 }
 ?>

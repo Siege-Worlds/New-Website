@@ -2,291 +2,530 @@
 
 <?php
 $charFile = __DIR__ . '/../database/characters.json';
-$trainingDir = __DIR__ . '/../database/training/';
-
-if (!is_dir($trainingDir)) {
-    mkdir($trainingDir, 0755, true);
-}
-
-// Handle form submissions
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['char_action'])) {
-    $characters = json_decode(file_get_contents($charFile), true) ?: [];
-
-    if ($_POST['char_action'] === 'save') {
-        $id = preg_replace('/[^a-z0-9_-]/', '', strtolower($_POST['char_id'] ?? ''));
-        if ($id) {
-            $found = false;
-            foreach ($characters as &$c) {
-                if ($c['id'] === $id) {
-                    $c['name'] = $_POST['char_name'] ?? $c['name'];
-                    $c['api_key'] = $_POST['char_api_key'] ?? $c['api_key'];
-                    $c['image'] = $_POST['char_image'] ?? $c['image'];
-                    $c['intro'] = $_POST['char_intro'] ?? $c['intro'];
-                    $c['enabled'] = isset($_POST['char_enabled']);
-                    $found = true;
-                    break;
-                }
-            }
-            unset($c);
-            if (!$found) {
-                $characters[] = [
-                    'id' => $id,
-                    'name' => $_POST['char_name'] ?? $id,
-                    'api_key' => $_POST['char_api_key'] ?? '',
-                    'image' => $_POST['char_image'] ?? '',
-                    'intro' => $_POST['char_intro'] ?? '',
-                    'enabled' => isset($_POST['char_enabled'])
-                ];
-            }
-            file_put_contents($charFile, json_encode($characters, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-            echo '<div class="alert alert-success">Character "' . htmlspecialchars($_POST['char_name']) . '" saved.</div>';
-        }
-    }
-
-    if ($_POST['char_action'] === 'delete') {
-        $id = $_POST['char_id'] ?? '';
-        $characters = array_values(array_filter($characters, fn($c) => $c['id'] !== $id));
-        file_put_contents($charFile, json_encode($characters, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-        echo '<div class="alert alert-warning">Character deleted.</div>';
-    }
-
-    if ($_POST['char_action'] === 'upload_training') {
-        $id = preg_replace('/[^a-z0-9_-]/', '', strtolower($_POST['char_id'] ?? ''));
-        if ($id && isset($_FILES['training_file']) && $_FILES['training_file']['error'] === UPLOAD_ERR_OK) {
-            $ext = strtolower(pathinfo($_FILES['training_file']['name'], PATHINFO_EXTENSION));
-            $allowed = ['txt', 'md', 'json', 'csv'];
-            if (in_array($ext, $allowed)) {
-                $charTrainingDir = $trainingDir . $id . '/';
-                if (!is_dir($charTrainingDir)) {
-                    mkdir($charTrainingDir, 0755, true);
-                }
-                $filename = basename($_FILES['training_file']['name']);
-                move_uploaded_file($_FILES['training_file']['tmp_name'], $charTrainingDir . $filename);
-                echo '<div class="alert alert-success">Training file "' . htmlspecialchars($filename) . '" uploaded for ' . htmlspecialchars($id) . '.</div>';
-            } else {
-                echo '<div class="alert alert-danger">Invalid file type. Allowed: txt, md, json, csv</div>';
-            }
-        }
-    }
-
-    if ($_POST['char_action'] === 'send_training') {
-        $id = preg_replace('/[^a-z0-9_-]/', '', strtolower($_POST['char_id'] ?? ''));
-        $charTrainingDir = $trainingDir . $id . '/';
-        $charData = null;
-        foreach ($characters as $c) {
-            if ($c['id'] === $id) { $charData = $c; break; }
-        }
-        if ($charData && $charData['api_key'] && is_dir($charTrainingDir)) {
-            $files = glob($charTrainingDir . '*');
-            $allContent = '';
-            foreach ($files as $f) {
-                $allContent .= "--- " . basename($f) . " ---\n" . file_get_contents($f) . "\n\n";
-            }
-            if ($allContent) {
-                $ch = curl_init('https://kabdqrzcewkzbjmeqmxx.supabase.co/functions/v1/public-ingest-knowledge');
-                curl_setopt_array($ch, [
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_POST => true,
-                    CURLOPT_HTTPHEADER => [
-                        'Content-Type: application/json',
-                        'Authorization: Bearer ' . $charData['api_key']
-                    ],
-                    CURLOPT_POSTFIELDS => json_encode([
-                        'content' => $allContent,
-                        'source' => 'admin-upload'
-                    ])
-                ]);
-                $response = curl_exec($ch);
-                $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-                curl_close($ch);
-                if ($httpCode >= 200 && $httpCode < 300) {
-                    echo '<div class="alert alert-success">Training data sent to Kinetik for ' . htmlspecialchars($charData['name']) . '.</div>';
-                } else {
-                    echo '<div class="alert alert-danger">Kinetik API error (HTTP ' . $httpCode . '): ' . htmlspecialchars($response) . '</div>';
-                }
-            } else {
-                echo '<div class="alert alert-warning">No training files found for this character.</div>';
-            }
-        } else {
-            echo '<div class="alert alert-danger">Missing API key or training files.</div>';
-        }
-    }
-}
-
 $characters = json_decode(file_get_contents($charFile), true) ?: [];
 ?>
 
 <style>
-    .char-card {
-        background: #f8f9fa;
-        border: 1px solid #dee2e6;
+    .char-panel {
+        background: #2a2928;
+        border: 1px solid #3a3836;
         border-radius: 8px;
         padding: 1.5rem;
-        margin-bottom: 1.5rem;
+        margin-bottom: 2rem;
     }
-    .char-card h4 {
-        margin-top: 0;
+    .char-panel h3 {
+        margin: 0 0 1rem 0;
+        color: #fff;
+        font-size: 1.4rem;
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: 0.75rem;
     }
-    .char-card .badge-enabled {
-        background: #28a745;
-        color: #fff;
+    .char-panel h3 .badge {
+        font-size: 0.7rem;
         padding: 2px 8px;
         border-radius: 4px;
-        font-size: 0.75rem;
+        text-transform: uppercase;
+        font-weight: 600;
     }
-    .char-card .badge-disabled {
-        background: #6c757d;
-        color: #fff;
-        padding: 2px 8px;
-        border-radius: 4px;
-        font-size: 0.75rem;
+    .badge-on { background: #34A853; color: #fff; }
+    .badge-off { background: #6c757d; color: #fff; }
+
+    .char-top-row {
+        display: flex;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
     }
-    .char-card img.char-preview {
-        max-height: 120px;
-        border-radius: 6px;
+    .char-img-col {
+        flex: 0 0 240px;
+    }
+    .char-img-preview {
+        width: 100%;
+        max-height: 360px;
+        object-fit: contain;
+        border-radius: 8px;
+        background: #1a1918;
+        border: 1px solid #3a3836;
+        display: block;
+        margin-bottom: 0.75rem;
+    }
+    .char-img-col label {
+        color: #bab1a8;
+        font-size: 0.85rem;
+        display: block;
         margin-bottom: 0.5rem;
     }
-    .api-key-field {
+
+    .char-info-col {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+    }
+    .char-info-col label {
+        color: #bab1a8;
+        font-size: 0.85rem;
+        display: block;
+        margin-bottom: 0.25rem;
+    }
+    .char-info-col .helper-text {
+        color: #7a7572;
+        font-size: 0.78rem;
+        margin-bottom: 0.5rem;
+    }
+    .char-info-col textarea {
+        flex: 1;
+        min-height: 280px;
+        resize: vertical;
+        background: #1a1918;
+        color: #bab1a8;
+        border: 1px solid #3a3836;
+        border-radius: 6px;
+        padding: 0.75rem;
+        font-size: 0.9rem;
+        font-family: "Open Sans", sans-serif;
+        line-height: 1.5;
+    }
+    .char-counter {
+        text-align: right;
+        font-size: 0.78rem;
+        color: #7a7572;
+        margin-top: 4px;
+    }
+    .char-counter.warn { color: #ff8800; }
+
+    .char-keys-row {
+        display: flex;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .char-keys-row .key-field {
+        flex: 1;
+    }
+    .char-keys-row label {
+        color: #bab1a8;
+        font-size: 0.85rem;
+        display: block;
+        margin-bottom: 0.25rem;
+    }
+    .char-keys-row .helper-text {
+        color: #7a7572;
+        font-size: 0.78rem;
+        margin-bottom: 0.5rem;
+    }
+    .char-keys-row input {
+        width: 100%;
+        background: #1a1918;
+        color: #bab1a8;
+        border: 1px solid #3a3836;
+        border-radius: 6px;
+        padding: 0.5rem 0.75rem;
         font-family: monospace;
         font-size: 0.85rem;
     }
-    .training-files {
-        list-style: none;
-        padding: 0;
-        margin: 0.5rem 0;
+
+    .char-meta-row {
+        display: flex;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
     }
-    .training-files li {
-        padding: 4px 0;
+    .char-meta-row .meta-field {
+        flex: 1;
+    }
+    .char-meta-row label {
+        color: #bab1a8;
+        font-size: 0.85rem;
+        display: block;
+        margin-bottom: 0.25rem;
+    }
+    .char-meta-row input, .char-meta-row textarea.intro-field {
+        width: 100%;
+        background: #1a1918;
+        color: #bab1a8;
+        border: 1px solid #3a3836;
+        border-radius: 6px;
+        padding: 0.5rem 0.75rem;
         font-size: 0.9rem;
-        color: #495057;
+        font-family: "Open Sans", sans-serif;
     }
-    .section-divider {
-        border-top: 2px solid #dee2e6;
+    .char-meta-row textarea.intro-field {
+        min-height: 60px;
+        resize: vertical;
+    }
+    .char-meta-row .form-check {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding-top: 1.2rem;
+    }
+    .char-meta-row .form-check input {
+        width: 18px;
+        height: 18px;
+        accent-color: #6a24fa;
+    }
+    .char-meta-row .form-check label {
+        margin: 0;
+    }
+
+    .char-btn-row {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 0.75rem;
+    }
+    .char-btn-row .train-result {
+        color: #bab1a8;
+        font-size: 0.85rem;
+        margin-right: auto;
+    }
+    .char-btn-row .train-result.error { color: #CD412B; }
+    .char-btn-row .train-result.success { color: #34A853; }
+
+    .btn-save {
+        background: #6a24fa;
+        color: #fff;
+        border: none;
+        padding: 0.5rem 1.5rem;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        min-width: 100px;
+    }
+    .btn-save:hover { background: #7b3aff; }
+    .btn-save:disabled { opacity: 0.6; cursor: default; }
+    .btn-save.saved { background: #34A853; }
+
+    .btn-train {
+        background: #ff8800;
+        color: #fff;
+        border: none;
+        padding: 0.5rem 1.5rem;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        min-width: 100px;
+    }
+    .btn-train:hover { background: #ffaa44; }
+    .btn-train:disabled { opacity: 0.6; cursor: default; }
+    .btn-train.training { background: #3a3938; }
+    .btn-train.trained { background: #34A853; }
+
+    .btn-upload {
+        background: #3a3836;
+        color: #bab1a8;
+        border: 1px solid #4c4946;
+        padding: 0.4rem 1rem;
+        border-radius: 6px;
+        font-size: 0.85rem;
+        cursor: pointer;
+    }
+    .btn-upload:hover { background: #4c4946; color: #fff; }
+
+    .char-divider {
+        border: none;
+        border-top: 1px solid #3a3836;
         margin: 2rem 0;
     }
 </style>
 
-<h3>Character APIs</h3>
-<p class="text-muted">Manage AI chat characters. API keys are stored server-side and never exposed to visitors.</p>
+<h3>Character Management</h3>
+<p class="text-muted">Manage AI chat characters, API keys, and training data. Admin API Keys are kept server-side only.</p>
 
-<?php foreach ($characters as $char): ?>
-<div class="char-card">
-    <h4>
+<?php foreach ($characters as $idx => $char): ?>
+<div class="char-panel" id="panel-<?php echo $char['id']; ?>">
+    <h3>
         <?php echo htmlspecialchars($char['name']); ?>
-        <span class="<?php echo $char['enabled'] ? 'badge-enabled' : 'badge-disabled'; ?>">
+        <span class="badge <?php echo $char['enabled'] ? 'badge-on' : 'badge-off'; ?>">
             <?php echo $char['enabled'] ? 'Enabled' : 'Disabled'; ?>
         </span>
-    </h4>
+    </h3>
 
-    <?php if ($char['image']): ?>
-        <img src="<?php echo htmlspecialchars($char['image']); ?>" alt="<?php echo htmlspecialchars($char['name']); ?>" class="char-preview" />
-    <?php endif; ?>
-
-    <form method="post" action="admin_dashboard.php?form=characterapis">
-        <input type="hidden" name="char_action" value="save" />
-        <input type="hidden" name="char_id" value="<?php echo htmlspecialchars($char['id']); ?>" />
-
-        <div class="form-group">
+    <!-- Name, Intro, Enabled -->
+    <div class="char-meta-row">
+        <div class="meta-field">
             <label>Display Name</label>
-            <input type="text" name="char_name" class="form-control" value="<?php echo htmlspecialchars($char['name']); ?>" />
+            <input type="text" class="char-field" data-char="<?php echo $char['id']; ?>" data-field="name"
+                   value="<?php echo htmlspecialchars($char['name']); ?>" />
         </div>
-        <div class="form-group">
-            <label>API Key</label>
-            <input type="text" name="char_api_key" class="form-control api-key-field" value="<?php echo htmlspecialchars($char['api_key']); ?>" placeholder="kinet_..." />
-        </div>
-        <div class="form-group">
-            <label>Character Image Path</label>
-            <input type="text" name="char_image" class="form-control" value="<?php echo htmlspecialchars($char['image']); ?>" placeholder="/img/character.webp" />
-        </div>
-        <div class="form-group">
+        <div class="meta-field" style="flex:2;">
             <label>Chat Intro Text</label>
-            <textarea name="char_intro" class="form-control" rows="2"><?php echo htmlspecialchars($char['intro']); ?></textarea>
+            <textarea class="intro-field char-field" data-char="<?php echo $char['id']; ?>" data-field="intro"><?php echo htmlspecialchars($char['intro']); ?></textarea>
         </div>
-        <div class="form-check mb-3">
-            <input type="checkbox" name="char_enabled" class="form-check-input" id="enabled_<?php echo $char['id']; ?>" <?php echo $char['enabled'] ? 'checked' : ''; ?> />
-            <label class="form-check-label" for="enabled_<?php echo $char['id']; ?>">Enabled on website</label>
+        <div class="meta-field">
+            <div class="form-check">
+                <input type="checkbox" class="char-field" data-char="<?php echo $char['id']; ?>" data-field="enabled"
+                       id="enabled-<?php echo $char['id']; ?>"
+                       <?php echo $char['enabled'] ? 'checked' : ''; ?> />
+                <label for="enabled-<?php echo $char['id']; ?>">Enabled on website</label>
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary btn-sm">Save Character</button>
-    </form>
+    </div>
 
-    <div class="section-divider"></div>
-
-    <h5>Training Data</h5>
-    <?php
-    $charTrainingDir = $trainingDir . $char['id'] . '/';
-    $trainingFiles = is_dir($charTrainingDir) ? glob($charTrainingDir . '*') : [];
-    ?>
-    <?php if ($trainingFiles): ?>
-        <ul class="training-files">
-            <?php foreach ($trainingFiles as $f): ?>
-                <li>&#128196; <?php echo htmlspecialchars(basename($f)); ?> (<?php echo round(filesize($f) / 1024, 1); ?> KB)</li>
-            <?php endforeach; ?>
-        </ul>
-    <?php else: ?>
-        <p class="text-muted" style="font-size:0.9rem;">No training files uploaded yet.</p>
-    <?php endif; ?>
-
-    <form method="post" action="admin_dashboard.php?form=characterapis" enctype="multipart/form-data" class="mt-2">
-        <input type="hidden" name="char_action" value="upload_training" />
-        <input type="hidden" name="char_id" value="<?php echo htmlspecialchars($char['id']); ?>" />
-        <div class="form-group">
-            <label>Upload Training File (.txt, .md, .json, .csv)</label>
-            <input type="file" name="training_file" class="form-control-file" accept=".txt,.md,.json,.csv" />
+    <!-- Image (left) + Game Info (right) -->
+    <div class="char-top-row">
+        <div class="char-img-col">
+            <label>Character Side Image</label>
+            <?php if ($char['image']): ?>
+            <img src="<?php echo htmlspecialchars($char['image']); ?>" class="char-img-preview" id="img-preview-<?php echo $char['id']; ?>" />
+            <?php else: ?>
+            <div class="char-img-preview" id="img-preview-<?php echo $char['id']; ?>" style="height:200px;display:flex;align-items:center;justify-content:center;color:#7a7572;">No image</div>
+            <?php endif; ?>
+            <input type="file" id="img-input-<?php echo $char['id']; ?>" accept="image/jpeg,image/png,image/webp,image/gif" style="display:none;"
+                   onchange="uploadCharImage('<?php echo $char['id']; ?>')" />
+            <button class="btn-upload" onclick="document.getElementById('img-input-<?php echo $char['id']; ?>').click()">
+                <?php echo $char['image'] ? 'Replace Image' : 'Upload Image'; ?>
+            </button>
         </div>
-        <button type="submit" class="btn btn-outline-secondary btn-sm">Upload File</button>
-    </form>
+        <div class="char-info-col">
+            <label>Game Info (RAG Training Data)</label>
+            <div class="helper-text">Paste all information you want this character to know about Siege Worlds. This will be sent to Kinet.ink for training.</div>
+            <textarea class="char-field" data-char="<?php echo $char['id']; ?>" data-field="game_info"
+                      id="gameinfo-<?php echo $char['id']; ?>" maxlength="500000"
+                      placeholder="Paste game info, lore, mechanics, FAQ, etc..."><?php echo htmlspecialchars($char['game_info'] ?? ''); ?></textarea>
+            <div class="char-counter" id="counter-<?php echo $char['id']; ?>">0 / 500,000</div>
+        </div>
+    </div>
 
-    <form method="post" action="admin_dashboard.php?form=characterapis" class="mt-2">
-        <input type="hidden" name="char_action" value="send_training" />
-        <input type="hidden" name="char_id" value="<?php echo htmlspecialchars($char['id']); ?>" />
-        <button type="submit" class="btn btn-success btn-sm" onclick="return confirm('Send all training data to Kinetik API?')">
-            Send Training to Kinetik
-        </button>
-    </form>
+    <!-- API Keys -->
+    <div class="char-keys-row">
+        <div class="key-field">
+            <label>Chat API Key</label>
+            <div class="helper-text">Embedded in iframe URL — safe to expose client-side</div>
+            <input type="text" class="char-field" data-char="<?php echo $char['id']; ?>" data-field="chat_api_key"
+                   value="<?php echo htmlspecialchars($char['chat_api_key'] ?? ''); ?>" placeholder="kinet_..." />
+        </div>
+        <div class="key-field">
+            <label>Admin API Key</label>
+            <div class="helper-text">Server-side only — used for RAG training. Never exposed to browsers.</div>
+            <input type="text" class="char-field" data-char="<?php echo $char['id']; ?>" data-field="admin_api_key"
+                   value="<?php echo htmlspecialchars($char['admin_api_key'] ?? ''); ?>" placeholder="kinet_..." />
+        </div>
+    </div>
 
-    <form method="post" action="admin_dashboard.php?form=characterapis" class="mt-3">
-        <input type="hidden" name="char_action" value="delete" />
-        <input type="hidden" name="char_id" value="<?php echo htmlspecialchars($char['id']); ?>" />
-        <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Delete this character?')">Delete Character</button>
-    </form>
+    <!-- Buttons -->
+    <div class="char-btn-row">
+        <span class="train-result" id="train-result-<?php echo $char['id']; ?>"></span>
+        <button class="btn-train" id="train-btn-<?php echo $char['id']; ?>"
+                onclick="trainCharacter('<?php echo $char['id']; ?>')">Train</button>
+        <button class="btn-save" id="save-btn-<?php echo $char['id']; ?>"
+                onclick="saveCharacter('<?php echo $char['id']; ?>')">Save</button>
+    </div>
 </div>
 <?php endforeach; ?>
 
-<div class="section-divider"></div>
-
-<h4>Add New Character</h4>
-<form method="post" action="admin_dashboard.php?form=characterapis">
-    <input type="hidden" name="char_action" value="save" />
-    <div class="form-row">
-        <div class="form-group col-md-3">
+<!-- Add New Character -->
+<hr class="char-divider" />
+<div class="char-panel">
+    <h3>Add New Character</h3>
+    <div class="char-meta-row">
+        <div class="meta-field">
             <label>ID (lowercase, no spaces)</label>
-            <input type="text" name="char_id" class="form-control" placeholder="e.g. shiyang" required pattern="[a-z0-9_-]+" />
+            <input type="text" id="new-char-id" placeholder="e.g. shiyang" pattern="[a-z0-9_-]+" />
         </div>
-        <div class="form-group col-md-3">
+        <div class="meta-field">
             <label>Display Name</label>
-            <input type="text" name="char_name" class="form-control" placeholder="e.g. Shi Yang" required />
+            <input type="text" id="new-char-name" placeholder="e.g. Shi Yang" />
         </div>
-        <div class="form-group col-md-6">
-            <label>API Key</label>
-            <input type="text" name="char_api_key" class="form-control api-key-field" placeholder="kinet_..." />
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-group col-md-4">
-            <label>Character Image Path</label>
-            <input type="text" name="char_image" class="form-control" placeholder="/img/character.webp" />
-        </div>
-        <div class="form-group col-md-8">
-            <label>Chat Intro Text</label>
-            <input type="text" name="char_intro" class="form-control" placeholder="Ask this character about..." />
+        <div class="meta-field">
+            <div class="form-check" style="padding-top:1.2rem;">
+                <button class="btn-save" onclick="addCharacter()">Add Character</button>
+            </div>
         </div>
     </div>
-    <div class="form-check mb-3">
-        <input type="checkbox" name="char_enabled" class="form-check-input" id="enabled_new" />
-        <label class="form-check-label" for="enabled_new">Enabled on website</label>
-    </div>
-    <button type="submit" class="btn btn-primary">Add Character</button>
-</form>
+</div>
+
+<script>
+// Update character counters on load
+document.querySelectorAll('textarea[data-field="game_info"]').forEach(function(ta) {
+    updateCounter(ta.dataset.char);
+    ta.addEventListener('input', function() { updateCounter(this.dataset.char); });
+});
+
+// Reset buttons when any field is edited
+document.querySelectorAll('.char-field').forEach(function(el) {
+    var evt = el.tagName === 'TEXTAREA' || el.type === 'text' ? 'input' : 'change';
+    el.addEventListener(evt, function() {
+        var id = this.dataset.char;
+        resetSaveBtn(id);
+        if (this.dataset.field === 'game_info') resetTrainBtn(id);
+    });
+});
+
+function updateCounter(charId) {
+    var ta = document.getElementById('gameinfo-' + charId);
+    var counter = document.getElementById('counter-' + charId);
+    if (!ta || !counter) return;
+    var len = ta.value.length;
+    counter.textContent = len.toLocaleString() + ' / 500,000';
+    counter.className = 'char-counter' + (len > 490000 ? ' warn' : '');
+}
+
+function resetSaveBtn(charId) {
+    var btn = document.getElementById('save-btn-' + charId);
+    btn.textContent = 'Save';
+    btn.className = 'btn-save';
+    btn.disabled = false;
+}
+
+function resetTrainBtn(charId) {
+    var btn = document.getElementById('train-btn-' + charId);
+    btn.textContent = 'Train';
+    btn.className = 'btn-train';
+    btn.disabled = false;
+    document.getElementById('train-result-' + charId).textContent = '';
+}
+
+function getCharFields(charId) {
+    var data = { id: charId };
+    document.querySelectorAll('.char-field[data-char="' + charId + '"]').forEach(function(el) {
+        var field = el.dataset.field;
+        if (el.type === 'checkbox') {
+            data[field] = el.checked;
+        } else {
+            data[field] = el.value;
+        }
+    });
+    return data;
+}
+
+function saveCharacter(charId) {
+    var btn = document.getElementById('save-btn-' + charId);
+    btn.textContent = 'Saving...';
+    btn.disabled = true;
+
+    var data = getCharFields(charId);
+
+    fetch('/api/admin-save.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(res) {
+        if (res.success) {
+            btn.textContent = 'Saved';
+            btn.className = 'btn-save saved';
+        } else {
+            btn.textContent = 'Error';
+            btn.disabled = false;
+            alert('Save failed: ' + (res.error || 'Unknown error'));
+        }
+    })
+    .catch(function() {
+        btn.textContent = 'Error';
+        btn.disabled = false;
+        alert('Connection error');
+    });
+}
+
+function trainCharacter(charId) {
+    var ta = document.getElementById('gameinfo-' + charId);
+    if (!ta || !ta.value.trim()) {
+        alert('No game info to train on.');
+        return;
+    }
+
+    var btn = document.getElementById('train-btn-' + charId);
+    var result = document.getElementById('train-result-' + charId);
+    btn.textContent = 'Training...';
+    btn.className = 'btn-train training';
+    btn.disabled = true;
+    result.textContent = '';
+    result.className = 'train-result';
+
+    fetch('/api/train.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            character_id: charId,
+            text: ta.value
+        })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(res) {
+        if (res.success) {
+            btn.textContent = 'Trained';
+            btn.className = 'btn-train trained';
+            result.textContent = res.chunksProcessed ? res.chunksProcessed + ' chunks processed' : 'Training complete';
+            result.className = 'train-result success';
+        } else {
+            btn.textContent = 'Train';
+            btn.className = 'btn-train';
+            btn.disabled = false;
+            result.textContent = 'Error: ' + (res.error || 'Unknown');
+            result.className = 'train-result error';
+        }
+    })
+    .catch(function() {
+        btn.textContent = 'Train';
+        btn.className = 'btn-train';
+        btn.disabled = false;
+        result.textContent = 'Connection error';
+        result.className = 'train-result error';
+    });
+}
+
+function uploadCharImage(charId) {
+    var input = document.getElementById('img-input-' + charId);
+    if (!input.files.length) return;
+
+    var formData = new FormData();
+    formData.append('image', input.files[0]);
+    formData.append('character_id', charId);
+
+    // Show preview immediately
+    var preview = document.getElementById('img-preview-' + charId);
+    if (preview.tagName === 'IMG') {
+        preview.src = URL.createObjectURL(input.files[0]);
+    }
+
+    fetch('/api/admin-upload.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(res) {
+        if (res.success) {
+            resetSaveBtn(charId);
+        } else {
+            alert('Upload failed: ' + (res.error || 'Unknown error'));
+        }
+    })
+    .catch(function() {
+        alert('Upload connection error');
+    });
+}
+
+function addCharacter() {
+    var id = document.getElementById('new-char-id').value.trim().toLowerCase().replace(/[^a-z0-9_-]/g, '');
+    var name = document.getElementById('new-char-name').value.trim();
+    if (!id || !name) {
+        alert('Please enter both an ID and a name.');
+        return;
+    }
+
+    fetch('/api/admin-save.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            id: id,
+            name: name,
+            chat_api_key: '',
+            admin_api_key: '',
+            intro: '',
+            game_info: '',
+            enabled: false,
+            _create: true
+        })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(res) {
+        if (res.success || res.error === 'Character not found') {
+            // For new characters, we need to add them
+            window.location.reload();
+        }
+    });
+}
+</script>
