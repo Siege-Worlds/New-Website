@@ -1,75 +1,39 @@
-<!-- Adding Bootstrap CSS link -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-
-
-<!--Nav bar / top menu-->
-<div class="container-fluid p-0">
-    <main>
-        <div class="px-4 py-5 my-5 text-center">
-            <div class="table-responsive w-75 mx-auto">
-                <table id="hstable" class="table table-dark table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col">Date/Time</th>
-                            <th scope="col">Item id</th>
-                            <th scope="col">Item name</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Buyer</th>
-                            <th scope="col">Seller</th>
-                        </tr>
-                    </thead>
-                    <tbody id="hsdata">
-                        <tr>
-                            <th scope="row"></th>
-                            <td colspan="6">Loading Data...</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </main>
-</div>
-
-<!-- Bootstrap JS and jQuery -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
 
-<script type="text/javascript">
+<div class="admin-card" style="max-height:70vh;overflow-y:auto;">
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Date/Time</th>
+                <th>Item ID</th>
+                <th>Item Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Buyer</th>
+                <th>Seller</th>
+            </tr>
+        </thead>
+        <tbody id="hsdata">
+            <tr><td colspan="7">Loading...</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
     const API_BASE = <?php echo json_encode($GLOBALS['API_BASE'] ?? ''); ?>;
 
-    function loadExchangeLogs() {
-        var totalVolume = 0;
-        $.get(API_BASE + '/api/exchangelogs', result => {
-            var highscoreString = '<tbody id="hsdata">';
-            for (let i = result.length - 1; i >= 0; i--) {
-                highscoreString = highscoreString.concat(`
-                    <tr>
-                        <th scope="row">` + result[i].date + `</th>
-                        <td>` + result[i].item_id + `</td>
-                        <td>` + result[i].item_name + `</td>
-                        <td>` + result[i].amount + `</td>
-                        <td>` + result[i].price + `</td>
-                        <td>` + capitalizeFirstLetter(result[i].buyer_name) + `</td>
-                        <td>` + capitalizeFirstLetter(result[i].seller_name) + `</td>
-                    </tr>
-                    `)
-                totalVolume += result[i].amount;
-                totalVolume += result[i].price;
+    function capitalizeFirstLetter(s) {
+        return s.charAt(0).toUpperCase() + s.slice(1);
+    }
+
+    $(document).ready(function() {
+        $.get(API_BASE + '/api/exchangelogs', function(result) {
+            var html = '';
+            for (var i = result.length - 1; i >= 0; i--) {
+                var r = result[i];
+                html += '<tr><td>' + r.date + '</td><td>' + r.item_id + '</td><td>' + r.item_name + '</td><td>' + r.amount + '</td><td>' + r.price + '</td><td>' + capitalizeFirstLetter(r.buyer_name) + '</td><td>' + capitalizeFirstLetter(r.seller_name) + '</td></tr>';
             }
-            console.log("total volume " + totalVolume);
-            highscoreString = highscoreString.concat('</tbody>');
-            $('#hsdata').replaceWith(
-                highscoreString
-            )
-        })
-    }
-
-    function capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    }
-
-    window.onload = _ => {
-        loadExchangeLogs();
-    }
+            $('#hsdata').html(html || '<tr><td colspan="7">No data</td></tr>');
+        });
+    });
 </script>
