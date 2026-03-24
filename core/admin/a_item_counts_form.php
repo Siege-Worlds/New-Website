@@ -27,11 +27,12 @@
         background: rgba(106, 36, 250, 0.08);
     }
     .item-count-card img {
-        width: 72px;
-        height: 72px;
+        width: 74px;
+        height: 74px;
         border-radius: 4px;
         flex-shrink: 0;
         object-fit: contain;
+        background: #4a4a4a;
     }
     .item-count-info {
         flex: 1;
@@ -39,7 +40,7 @@
     }
     .item-count-name {
         color: #fff;
-        font-size: 0.95rem;
+        font-size: 0.8rem;
         font-weight: 600;
         white-space: nowrap;
         overflow: hidden;
@@ -52,7 +53,7 @@
     }
     .item-count-value {
         font-family: "Bebas Neue", sans-serif;
-        font-size: 1.6rem;
+        font-size: 1.3rem;
         color: #fff;
         flex-shrink: 0;
         text-align: right;
@@ -77,21 +78,26 @@
             var counts = countsRes[0];
             var items = itemsRes[0];
 
-            var nameMap = {};
+            var infoMap = {};
             items.forEach(function(item) {
-                nameMap[item.id_id] = item.item_name;
+                infoMap[item.id_id] = item;
             });
 
+            var MAX_SPRITE = 228;
+            var maxId = Math.max(counts.length - 1, MAX_SPRITE);
             var html = '';
-            for (var i = 0; i < counts.length; i++) {
-                var name = nameMap[i] || '—';
+            for (var i = 0; i <= maxId; i++) {
+                var info = infoMap[i];
+                var name = info ? info.item_name : 'Item #' + i;
+                var tier = info && info.item_tier > 0 ? ' T' + info.item_tier : '';
+                var count = i < counts.length ? counts[i] : 0;
                 html += '<div class="item-count-card">'
-                    + '<img src="img/game/sprites/' + i + '.png" alt="" />'
+                    + '<img src="img/sprites/' + i + '.webp" alt="" onerror="this.style.display=\'none\'" />'
                     + '<div class="item-count-info">'
-                    + '<div class="item-count-name">' + name + '</div>'
+                    + '<div class="item-count-name">' + name + tier + '</div>'
                     + '<div class="item-count-id">#' + i + '</div>'
                     + '</div>'
-                    + '<div class="item-count-value">' + counts[i].toLocaleString() + '</div>'
+                    + '<div class="item-count-value">' + count.toLocaleString() + '</div>'
                     + '</div>';
             }
             $('#itemCountsGrid').html(html || '<div style="grid-column:1/-1;color:#7a7572;">No data</div>');

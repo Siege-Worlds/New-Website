@@ -167,6 +167,7 @@ foreach ($enabledChars as $c) {
     var BG_COLOR = '1a112e';
     var ACCENT_COLOR = '6a24fa';
 
+    var USER_ID = '<?php echo isset($_SESSION["sso_user_id"]) ? htmlspecialchars($_SESSION["sso_user_id"], ENT_QUOTES) : ""; ?>';
     var USER_AVATAR = '<?php echo isset($_SESSION["avatar_url"]) ? htmlspecialchars($_SESSION["avatar_url"], ENT_QUOTES) : ""; ?>';
     var USER_NAME = '<?php echo isset($_SESSION["display_name"]) ? htmlspecialchars($_SESSION["display_name"], ENT_QUOTES) : (isset($_SESSION["username"]) ? htmlspecialchars($_SESSION["username"], ENT_QUOTES) : ""); ?>';
     var USER_BORDER_COLOR = '<?php echo isset($_SESSION["avatar_outer_color"]) ? htmlspecialchars($_SESSION["avatar_outer_color"], ENT_QUOTES) : ""; ?>';
@@ -192,6 +193,10 @@ foreach ($enabledChars as $c) {
     function buildIdentityMsg() {
         return {
             type: 'setUserIdentity',
+            userId: USER_ID,
+            user_id: USER_ID,
+            sub: USER_ID,
+            id: USER_ID,
             avatar: USER_AVATAR,
             user_avatar: USER_AVATAR,
             userAvatar: USER_AVATAR,
@@ -226,7 +231,8 @@ foreach ($enabledChars as $c) {
             + '&bg=' + BG_COLOR
             + '&accent=' + ACCENT_COLOR
             + '&header=false';
-        if (USER_NAME) url += '&userName=' + encodeURIComponent(USER_NAME);
+        if (USER_ID) url += '&user_id=' + encodeURIComponent(USER_ID);
+        if (USER_NAME) url += '&user_name=' + encodeURIComponent(USER_NAME);
         iframe.src = url;
         iframe.onload = function() {
             sendIdentity();
@@ -238,7 +244,10 @@ foreach ($enabledChars as $c) {
 
     window.addEventListener('message', function(event) {
         if (event.origin.indexOf('lovable.app') === -1 && event.origin.indexOf('kinet.ink') === -1) return;
-        sendIdentity();
+        // Respond to identity requests and any other messages from the embed
+        if (event.data && (event.data.type === 'embed:requestUserIdentity' || event.data.type)) {
+            sendIdentity();
+        }
     });
 
     window.switchCharacter = function(charKey) {
