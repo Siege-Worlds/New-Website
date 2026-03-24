@@ -3,20 +3,39 @@ name: Deploy Website
 on:
   push:
     branches:
-      - main  # Trigger only when pushing to the main branch
+      - main
 
 jobs:
   web-deploy:
     name: Deploy
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
     steps:
     - name: Get latest code
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0 # Fetches all history so it can compare changes better
 
-    - name: Sync files
+    - name: FTP Deploy
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        # server-dir: ./public_html/  # Adjust this to your host's folder
+        protocol: ftp
+        port: 21
+        ftp-ssl: true
+        server-dir: ./
+        # 1. THROTTLE: Only 1 connection at a time to prevent server kicks
+        parallel: 1
+        # 2. OPTIMIZE: Only upload files that actually changed
+        dangerous-clean-slate: false
+        # 3. EXCLUDE: Don't upload bulky junk you don't need on the server
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/node_modules/**
+          README.md
+          .gitignore

@@ -7,8 +7,28 @@ if (is_admin()) {
     exit;
 }
 
-// If logged in but not admin, show access denied
-if (is_logged_in()) {
+    <?php
+    session_start();
+
+    // Dummy credentials for example (use a database in production)
+    $admin_username = 'jake';
+    $admin_password = 'rabiddog';
+	
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+
+        // Check if the credentials are correct
+        if ($username === $admin_username && $password === $admin_password) {
+            session_regenerate_id(true);
+            $_SESSION['admin_logged_in'] = true;
+            header('Location: admin_dashboard.php'); // Redirect to the admin dashboard
+            exit;
+        } else {
+            echo "<script>alert('Invalid username or password');</script>";
+        }
+    }
     ?>
     <!DOCTYPE html>
     <html lang="en">
