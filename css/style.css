@@ -2000,7 +2000,7 @@ header.header .header-brand:hover img {
 
 header.header .header-brand img {
     max-height: none;
-    width: 350px;
+    width: 175px;
     transform: scale(1);
     transition: transform .2s ease;
 }
@@ -2038,6 +2038,18 @@ header.header .header-navigation a.button-green {
 header.header .header-navigation a.button-green:hover {
     background-color: #6eff7a !important;
     color: rgba(0,0,0,1);
+}
+header.header .header-navigation a.button-contest {
+    background-color: #ff8800;
+    color: #fff;
+    animation: contestPulse 2s ease-in-out infinite;
+}
+header.header .header-navigation a.button-contest:hover {
+    background-color: #ffaa44 !important;
+}
+@keyframes contestPulse {
+    0%, 100% { box-shadow: 0 0 5px rgba(255,136,0,0.3); }
+    50% { box-shadow: 0 0 15px rgba(255,136,0,0.6); }
 }
 header.header .header-navigation a.buy-button:hover {
     box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
@@ -3901,826 +3913,6 @@ nav.pagination .pagination-next:hover {
     background-color: #141312;
 }
 
-.buy-page.voiceprops .buy-hero {
-    background-color: #19101e;
-}
-
-.buy-page.voiceprops .buy-hero .buy-hero-body .buy-description {
-    color: #38dde0;
-}
-
-.buy-page.voiceprops .button.is-primary {
-    background-color: #f18c2b;
-    text-shadow: 0 2px 0 rgba(0, 0, 0, .1);
-}
-
-.buy-page.voiceprops .button.is-primary:hover {
-    background-color: #e4770f;
-}
-
-.buy-page.voiceprops .section.trailer {
-    background-color: #19101e;
-}
-
-.buy-page.voiceprops .section.trailer .buy-trailer .video-title {
-    background-color: #116c6e;
-    color: #38dde0;
-}
-
-.buy-page.voiceprops .section.trailer .about-text {
-    margin-top: 3rem;
-}
-
-.buy-page.voiceprops .section.trailer .about-text h1,
-.buy-page.voiceprops .section.trailer .about-text h2,
-.buy-page.voiceprops .section.trailer .about-text h3,
-.buy-page.voiceprops .section.trailer .about-text h4 {
-    color: #64e5e7;
-}
-
-.buy-page.voiceprops .section.trailer .about-text p {
-    color: #18989a;
-}
-
-.buy-page.voiceprops .section.trailer .about-text ul li {
-    background: #110b14;
-    color: #f18c2b;
-}
-
-.buy-page.voiceprops .section.whats-included {
-    background-color: #110b14;
-}
-
-.buy-page.voiceprops .section.whats-included .dark-bar-pattern {
-    background-color: #110b14;
-}
-
-.buy-page.voiceprops .section.whats-included .whats-included-type .title {
-    color: #38dde0;
-}
-
-.buy-page.voiceprops .section.whats-included .whats-included-type .subtitle {
-    color: #f18c2b;
-}
-
-.buy-page.voiceprops .section.whats-included .whats-included-type .subtitle:after {
-    background: linear-gradient(to right, rgba(241, 140, 43, 0), #f18c2b, rgba(241, 140, 43, 0));
-}
-
-.buy-page.voiceprops .section.whats-included .whats-included-body .dlc-item {
-    background: #050b0d;
-    color: #38dde0;
-    border-color: #38dde0;
-}
-
-.buy-page.voiceprops .section.whats-included .whats-included-body .dlc-item .dlc-item-title {
-    background-color: #110b14;
-}
-
-.buy-page.voiceprops .section.dlc-footer {
-    background-color: #110b14;
-}
-
-.buy-page.sunburn .buy-hero {
-    background-color: #110224;
-}
-
-.buy-page.sunburn .buy-hero .buy-hero-body .buy-description {
-    color: #39e8e7;
-}
-
-.buy-page.sunburn .button.is-primary {
-    background: linear-gradient(45deg, #e253aa, 30%, #9f8dc2);
-    text-shadow: 0 2px 0 rgba(0, 0, 0, .1);
-    transform: translateY(0);
-    transition: all .15s ease;
-}
-
-.buy-page.sunburn .button.is-primary:hover {
-    background: linear-gradient(45deg, #de3d9f, 30%, #917cb9);
-    transform: translateY(-3px);
-}
-
-.buy-page.sunburn .section.trailer {
-    background-color: #110224;
-}
-
-.buy-page.sunburn .section.trailer .buy-trailer .video-title {
-    background-color: #74094b;
-    color: #f257b7;
-}
-
-.buy-page.sunburn .section.trailer .about-text {
-    margin-top: 3rem;
-}
-
-.buy-page.sunburn .section.trailer .about-text h1,
-.buy-page.sunburn .section.trailer .about-text h2,
-.buy-page.sunburn .section.trailer .about-text h3,
-.buy-page.sunburn .section.trailer .about-text h4 {
-    color: #67eded;
-}
-
-.buy-page.sunburn .section.trailer .about-text p {
-    color: #13a8a7;
-}
-
-.buy-page.sunburn .section.trailer .about-text ul li {
-    background: #0d021b;
-    color: #f257b7;
-}
-
-.buy-page.sunburn .section.whats-included {
-    background-color: #0d021b;
-}
-
-.buy-page.sunburn .section.whats-included .dark-bar-pattern {
-    background-color: #0d021b;
-}
-
-.buy-page.sunburn .section.whats-included .whats-included-type .title {
-    color: #39e8e7;
-}
-
-.buy-page.sunburn .section.whats-included .whats-included-type .subtitle {
-    color: #f257b7;
-}
-
-.buy-page.sunburn .section.whats-included .whats-included-type .subtitle:after {
-    background: linear-gradient(to right, rgba(242, 87, 183, 0), #f257b7, rgba(242, 87, 183, 0));
-}
-
-.buy-page.sunburn .section.whats-included .whats-included-body .dlc-item {
-    background: linear-gradient(#39e8e7, #f257b7);
-    color: #39e8e7;
-    border-color: #f257b7;
-}
-
-.buy-page.sunburn .section.whats-included .whats-included-body .dlc-item .dlc-item-title {
-    background-color: #0d021b;
-}
-
-.buy-page.sunburn .section.dlc-footer {
-    background-color: #0d021b;
-}
-
-.buy-page.instruments .buy-hero {
-    background-color: #230c19;
-}
-
-.buy-page.instruments .buy-hero .buy-hero-body .buy-logo {
-    margin-bottom: 1rem;
-}
-
-.buy-page.instruments .buy-hero .buy-hero-body .buy-description {
-    color: #fffbfd;
-}
-
-.buy-page.instruments .button.is-primary {
-    background: #dc1681;
-    text-shadow: 0 2px 0 rgba(0, 0, 0, .1);
-    transform: translateY(0);
-    transition: all .15s ease;
-}
-
-.buy-page.instruments .button.is-primary:hover {
-    background: #c51473;
-    transform: translateY(-3px);
-}
-
-.buy-page.instruments .section.trailer {
-    background-color: #230c19;
-}
-
-.buy-page.instruments .section.trailer .buy-trailer .video-title {
-    background-color: #230314;
-    color: #dc1681;
-}
-
-.buy-page.instruments .section.trailer .about-text {
-    margin-top: 3rem;
-}
-
-.buy-page.instruments .section.trailer .about-text h1,
-.buy-page.instruments .section.trailer .about-text h2,
-.buy-page.instruments .section.trailer .about-text h3,
-.buy-page.instruments .section.trailer .about-text h4 {
-    color: #fff;
-}
-
-.buy-page.instruments .section.trailer .about-text p {
-    color: #ff95ca;
-}
-
-.buy-page.instruments .section.trailer .about-text ul li {
-    background: #180911;
-    color: #dc1681;
-}
-
-.buy-page.instruments .section.whats-included {
-    background-color: #180911;
-}
-
-.buy-page.instruments .section.whats-included .dark-bar-pattern {
-    background-color: #180911;
-}
-
-.buy-page.instruments .section.whats-included .whats-included-type .title {
-    color: #fffbfd;
-}
-
-.buy-page.instruments .section.whats-included .whats-included-type .subtitle {
-    color: #dc1681;
-}
-
-.buy-page.instruments .section.whats-included .whats-included-type .subtitle:after {
-    background: linear-gradient(to right, rgba(220, 22, 129, 0), #dc1681, rgba(220, 22, 129, 0));
-}
-
-.buy-page.instruments .section.whats-included .whats-included-body .dlc-item {
-    background: linear-gradient(45deg, rgba(255, 251, 253, .1), rgba(220, 22, 129, .1));
-    color: #fffbfd;
-    border-color: #dc1681;
-}
-
-.buy-page.instruments .section.whats-included .whats-included-body .dlc-item .dlc-item-title {
-    background-color: #dc1681;
-}
-
-.buy-page.instruments .section.dlc-footer {
-    background-color: #180911;
-}
-
-.buy-hero {
-    padding: calc(8rem + 100px) 0 5rem 0;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    text-align: left;
-    min-height: 70vh;
-}
-
-.buy-hero .buy-hero-image {
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    position: absolute;
-    mask-image: linear-gradient(rgba(255, 255, 255, .4) 0%, transparent 100%);
-    -webkit-mask-image: linear-gradient(rgba(255, 255, 255, .4) 0%, transparent 100%);
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    overflow: hidden;
-}
-
-.buy-hero .buy-hero-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.buy-hero .buy-hero-body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
-
-.buy-hero .buy-hero-body .buy-logo {
-    max-width: 50%;
-    margin-bottom: 3rem;
-}
-
-.buy-hero .buy-hero-body .buy-description {
-    margin-bottom: 3rem;
-    max-width: 50%;
-    text-align: center;
-}
-
-.section.trailer {
-    padding: 5rem 0 8rem 0;
-}
-
-.section.trailer .buy-trailer {
-    position: relative;
-    width: 100%;
-    padding-bottom: 56.25%;
-}
-
-.section.trailer .buy-trailer .video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
-}
-
-.section.trailer .buy-trailer .video-title {
-    font-family: "Bebas Neue", sans-serif;
-    font-size: 1.75rem;
-    position: absolute;
-    padding: .25rem .75rem;
-    z-index: 1;
-    top: 0;
-    transform: translateY(-100%);
-}
-
-.section.trailer .about-text {
-    background-color: rgba(0, 0, 0, .1);
-    padding: 3rem;
-}
-
-.section.trailer .about-text h1 {
-    color: #e4dad1;
-}
-
-.section.trailer .about-text p {
-    color: rgba(255, 255, 255, .7);
-}
-
-.section.trailer .about-text ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-}
-
-.section.trailer .about-text ul li {
-    background-color: rgba(0, 0, 0, .3);
-    padding: .5rem;
-    font-size: 14px;
-    margin: .25rem;
-}
-
-.section.whats-included .whats-included-type {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    margin-bottom: 4rem;
-}
-
-.section.whats-included .whats-included-type .title {
-    font-size: 3.5rem;
-    margin: 0;
-    padding: 0;
-}
-
-.section.whats-included .whats-included-type .subtitle {
-    font-family: "Bebas Neue", sans-serif;
-    font-size: 1.25rem;
-    position: relative;
-    margin-bottom: 20px;
-}
-
-.section.whats-included .whats-included-type .subtitle:after {
-    content: "";
-    background: linear-gradient(to right, rgba(205, 65, 43, 0), #6a24fa, rgba(205, 65, 43, 0));
-    position: absolute;
-    bottom: -16px;
-    left: 20%;
-    right: 20%;
-    height: 2px;
-}
-
-.section.whats-included .whats-included-type.footer {
-    margin: 6rem 0 0 0;
-}
-
-.section.whats-included .whats-included-type.footer .subtitle:after {
-    display: none;
-}
-
-.section.whats-included .whats-included-body {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.section.whats-included .whats-included-body .dlc-item {
-    background: linear-gradient(rgba(186, 233, 233, .1), rgba(186, 233, 233, 0));
-    border-width: 2px;
-    border-style: solid;
-    border-color: inherit;
-    display: flex;
-    color: #f00;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    position: relative;
-    flex: 0 0 calc(25% - 24px);
-    margin: 20px 12px;
-    transition: all .15s ease;
-    transform: scale(100%);
-}
-
-.section.whats-included .whats-included-body .dlc-item:hover {
-    transform: scale(105%);
-}
-
-.section.whats-included .whats-included-body .dlc-item .dlc-has-skins {
-    background-color: rgba(0, 0, 0, .8);
-    border-left-width: 2px;
-    border-left-color: inherit;
-    border-left-style: solid;
-    border-bottom-width: 2px;
-    border-bottom-color: inherit;
-    border-bottom-style: solid;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    flex-direction: row;
-    display: flex;
-    top: 0;
-    right: 0;
-    z-index: 1;
-    padding: .25rem;
-}
-
-.section.whats-included .whats-included-body .dlc-item .dlc-has-skins .icon {
-    align-items: center;
-    font-size: 21px;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-}
-
-.section.whats-included .whats-included-body .dlc-item .dlc-has-skins .skins-text {
-    background-color: rgba(0, 0, 0, .8);
-    font-family: "Bebas Neue", sans-serif;
-    margin-left: 4px;
-    transition: all .15s ease;
-}
-
-.section.whats-included .whats-included-body .dlc-item .dlc-item-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.section.whats-included .whats-included-body .dlc-item .dlc-item-image img,
-.section.whats-included .whats-included-body .dlc-item .dlc-item-image video {
-    width: 100%;
-    min-height: 210px;
-}
-
-.section.whats-included .whats-included-body .dlc-item .dlc-item-title {
-    color: inherit;
-    border-width: 2px;
-    border-style: solid;
-    border-color: inherit;
-    font-family: "Bebas Neue", sans-serif;
-    font-size: 1rem;
-    padding: .25rem .5rem;
-    position: absolute;
-    bottom: 0;
-    transform: translateY(50%);
-}
-
-.section.dlc-footer {
-    padding: 6rem 0;
-    position: relative;
-}
-
-.section.dlc-footer .dlc-footer-bg {
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    position: absolute;
-    mask-image: linear-gradient(to top, rgba(255, 255, 255, .2) 0%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to top, rgba(255, 255, 255, .2) 0%, transparent 100%);
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    overflow: hidden;
-}
-
-.section.dlc-footer .container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
-
-.section.dlc-footer .dlc-footer-logo {
-    max-width: 50%;
-    margin-bottom: 3rem;
-}
-
-.section.other-dlc {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
-
-.section.other-dlc .section-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    margin-bottom: 4rem;
-}
-
-.section.other-dlc .section-header .title {
-    font-size: 3.5rem;
-    margin: 0;
-    padding: 0;
-}
-
-.section.other-dlc .section-header .subtitle {
-    font-family: "Bebas Neue", sans-serif;
-    font-size: 1.25rem;
-    position: relative;
-    margin-bottom: 20px;
-}
-
-.section.other-dlc .section-header .subtitle:after {
-    content: "";
-    background: linear-gradient(to right, rgba(205, 65, 43, 0), #6a24fa, rgba(205, 65, 43, 0));
-    position: absolute;
-    bottom: -16px;
-    left: 20%;
-    right: 20%;
-    height: 2px;
-}
-
-.section.other-dlc .section-header.footer {
-    margin: 6rem 0 0 0;
-}
-
-.section.other-dlc .section-header.footer .subtitle:after {
-    display: none;
-}
-
-.section.other-dlc .all-dlc-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    max-width: 80%;
-}
-
-.section.other-dlc .all-dlc-container .dlc-box {
-    background-color: rgba(20, 19, 18, .5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 4rem;
-    position: relative;
-    flex: 0 0 calc(33% - 16px);
-    margin: 16px;
-    min-height: 450px;
-    transform: scale(100%);
-    transition: all .15s ease;
-}
-
-.section.other-dlc .all-dlc-container .dlc-box:hover {
-    background-color: #141312;
-    box-shadow: 0 5px 30px rgba(0, 0, 0, .5);
-    z-index: 1;
-    transform: scale(105%);
-}
-
-.section.other-dlc .all-dlc-container .dlc-box:hover .dlc-box-background {
-    mask-image: linear-gradient(rgba(255, 255, 255, .7) 0%, transparent 100%);
-    -webkit-mask-image: linear-gradient(rgba(255, 255, 255, .7) 0%, transparent 100%);
-}
-
-.section.other-dlc .all-dlc-container .dlc-box .dlc-box-background {
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    position: absolute;
-    mask-image: linear-gradient(rgba(255, 255, 255, .6) 0%, transparent 100%);
-    -webkit-mask-image: linear-gradient(rgba(255, 255, 255, .6) 0%, transparent 100%);
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    overflow: hidden;
-    transition: all .15s ease;
-}
-
-.section.other-dlc .all-dlc-container .dlc-box .dlc-box-background img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.section.other-dlc .all-dlc-container .dlc-box .dlc-box-logo {
-    width: 100%;
-    position: relative;
-    z-index: 1;
-}
-
-.section.is-updates .recent-updates {
-    flex-direction: row;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 30px;
-    margin-bottom: 3rem;
-}
-
-.section.is-updates .recent-updates .update-box {
-    width: 100%;
-    position: relative;
-    margin-bottom: 3rem;
-}
-
-.section.is-updates .recent-updates .update-box:hover .update-image {
-    transform: scale(110%);
-}
-
-.section.is-updates .recent-updates .update-box .update-image {
-    background-color: #1f1f1f;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, .2);
-    width: 100%;
-    height: 240px;
-    margin-bottom: 1rem;
-    position: relative;
-    transition: all .15s ease;
-    transform: scale(100%);
-}
-
-.section.is-updates .recent-updates .update-box .update-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: all .15s ease;
-}
-
-.section.is-updates .recent-updates .update-box .update-title {
-    color: #e4dad1;
-    background-color: #6a24fa;
-    font-family: "Bebas Neue", sans-serif;
-    font-size: 1.25rem;
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translate(-50%, 0);
-    z-index: 1;
-    padding: .5rem;
-}
-
-.section.is-updates .updates-footer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-}
-
-.section.is-buy-row {
-    background-color: #1b1b1b;
-    padding: 8rem 0;
-    position: relative;
-    min-height: 50vh;
-}
-
-.section.is-buy-row .buy-row-content {
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    flex-direction: column;
-}
-
-.section.is-buy-row .buy-row-content .buy-logo {
-    max-width: 800px;
-}
-
-.section.is-buy-row .buy-row-content .buy-description {
-    margin-bottom: 4rem;
-    text-align: center;
-}
-
-.section.is-buy-row .buy-row-content .buttons .button {
-    margin: 0 8px;
-}
-
-.section.is-buy-row.voiceprops {
-    background-color: #110b14;
-}
-
-.section.is-buy-row.voiceprops .buy-row-content .buy-description {
-    color: #f18c2b;
-}
-
-.section.is-buy-row.voiceprops .buy-row-content .button.is-primary {
-    background-color: #f18c2b;
-}
-
-.section.is-buy-row.voiceprops .buy-row-content .button.is-primary:hover {
-    background-color: #db720e;
-}
-
-.section.is-buy-row.sunburn {
-    background-color: #0d021b;
-}
-
-.section.is-buy-row.sunburn .buy-row-content .buy-description {
-    color: #f257b7;
-}
-
-.section.is-buy-row.sunburn .buy-row-content .button.is-primary {
-    background-color: #f257b7;
-}
-
-.section.is-buy-row.sunburn .buy-row-content .button.is-primary:hover {
-    background-color: #ee28a3;
-}
-
-.section.is-buy-row.instruments {
-    background-color: #180911;
-}
-
-.section.is-buy-row.instruments .buy-row-content .buy-description {
-    color: #dc1681;
-}
-
-.section.is-buy-row.instruments .buy-row-content .button.is-primary {
-    background-color: #dc1681;
-}
-
-.section.is-buy-row.instruments .buy-row-content .button.is-primary:hover {
-    background-color: #ae1166;
-}
-
-.section.is-buy-row.soundtrack .buy-row-content .buy-logo {
-    margin-bottom: 2rem;
-}
-
-.buy-page.soundtrack .buy-hero {
-    padding: calc(8rem + 100px) 0 3rem 0;
-    min-height: 50vh;
-}
-
-.buy-page.soundtrack .buy-hero .buy-description {
-    margin-bottom: 0;
-}
-
-
-.buy-page.soundtrack .soundtrack-container .soundtrack-header {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 2rem;
-}
-
-.buy-page.soundtrack .soundtrack-container .soundtrack-header .soundtrack-image {
-    flex: 1;
-    max-width: 400px;
-    max-height: 400px;
-}
-
-.buy-page.soundtrack .soundtrack-container .soundtrack-header .soundtrack-image img {
-    box-shadow: 0 5px 20px rgba(0, 0, 0, .2);
-    width: 100%;
-}
-
-.buy-page.soundtrack .soundtrack-container .soundtrack-header .soundtrack-body {
-    background-color: rgba(31, 31, 31, .5);
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    flex: 1;
-    padding: 3rem;
-}
-
-.buy-page.soundtrack .soundtrack-container .soundtrack-header .soundtrack-body .button {
-    margin-bottom: .5rem;
-}
-
-.buy-page.soundtrack .soundtrack-container .soundtrack-header .soundtrack-body .button:last-of-type {
-    margin-bottom: 0;
-}
-
-
-
-.buy-page.soundtrack .platform-buttons {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: row;
-    margin-top: 1rem;
-    width: 100%;
-}
-
-.buy-page.soundtrack .platform-buttons a {
-    margin: 0 .5rem;
-}
 
 .section.page-changelist .pagination {
     margin-top: 0;
@@ -5894,7 +5086,7 @@ nav.pagination .pagination-next:hover {
     background-color: #211f1d;
     display: flex;
     flex-direction: row;
-    padding-top: 10rem;
+    padding-top: 14rem;
 }
 
 
@@ -6428,6 +5620,130 @@ nav.pagination .pagination-next:hover {
     position: relative;
 }
 
+.section.partnerships {
+    padding: 5rem 0 2rem 0;
+}
+
+.section.partnerships .partnerships-title {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 5rem;
+    color: #fff;
+    text-align: center;
+    margin: 0 0 0.5rem 0;
+}
+
+.section.partnerships .partnerships-subtitle {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 1.8rem;
+    color: #6a24fa;
+    text-align: center;
+    text-transform: uppercase;
+    margin: 0 0 2.5rem 0;
+    letter-spacing: 0.05em;
+}
+
+
+.sponsor-card {
+    display: flex;
+    gap: 20px;
+    height: 270px;
+    padding: 0 40px;
+}
+
+.sponsor-info {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    height: 270px;
+    overflow: hidden;
+}
+
+.sponsor-logo {
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.05);
+}
+
+.sponsor-logo img {
+    max-width: 80%;
+    max-height: 70px;
+    object-fit: contain;
+}
+
+.sponsor-text {
+    flex: 1;
+    background: rgba(255,255,255,0.03);
+    padding: 1rem;
+    color: #bab1a8;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    overflow: hidden;
+}
+
+.sponsor-text h3 {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 1.6rem;
+    color: #e4dad1;
+    margin: 0 0 0.5rem 0;
+    letter-spacing: 0.05em;
+}
+
+.sponsor-image {
+    width: 50%;
+    height: 270px;
+    overflow: hidden;
+}
+
+.sponsor-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#sponsor-swiper .swiper-button-prev,
+#sponsor-swiper .swiper-button-next {
+    color: #fff;
+}
+
+#sponsor-swiper .swiper-pagination {
+    position: relative;
+    bottom: auto;
+    margin-top: 1rem;
+}
+
+#sponsor-swiper .swiper-pagination-bullet {
+    background: rgba(255,255,255,0.3);
+}
+
+#sponsor-swiper .swiper-pagination-bullet-active {
+    background: #6a24fa;
+}
+
+.partner-cta {
+    text-align: center;
+    margin-top: 1.2rem;
+}
+
+.partner-cta h2 {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 2.5rem;
+    color: #fff;
+    margin: 0 0 0.5rem 0;
+}
+
+.partner-cta a {
+    color: #6a24fa;
+    font-size: 1.25rem;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.partner-cta a:hover {
+    color: #7f4ae8;
+}
+
 .section.quote {
     position: relative;
     text-align: center;
@@ -6438,6 +5754,32 @@ nav.pagination .pagination-next:hover {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.quote-slide {
+    display: none;
+    width: 100%;
+}
+
+.quote-slide.active {
+    display: block;
+}
+
+.quote-with-headshot {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+}
+
+.quote-headshot {
+    width: 225px;
+    height: 225px;
+    border-radius: 50%;
+    border: 8px solid #6a24fa;
+    object-fit: cover;
+    flex-shrink: 0;
 }
 
 .section.quote .quote-text {
@@ -7367,13 +6709,10 @@ span.tag {
 #hstable th {
     border-bottom-width: 1px;
     border-bottom-style: solid;
-    /* Set the border style (in this example, 'solid') */
     border-bottom-color: #DADADA70;
-    /* Set the color (replace #ff0000 with your desired color code) */
     padding: 8px;
-    /*set the text color to white*/
     color: white;
-
+    text-align: center;
 }
 
 #hstable tr {
@@ -7391,6 +6730,37 @@ span.tag {
     background-color: #6a24fa;
     color: white;
 
+}
+
+#coltable {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#coltable td,
+#coltable th {
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #DADADA70;
+    padding: 8px;
+    color: white;
+    text-align: center;
+}
+
+#coltable tr {
+    background-color: #212529;
+}
+
+#coltable tr:hover {
+    background-color: #101418;
+}
+
+#coltable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #6a24fa;
+    color: white;
 }
 
 .hs-body {
@@ -7432,8 +6802,24 @@ span.tag {
 
 .hs-input {
     font-weight: 500;
-    font-family: "Bebas Neue", sans-serif;
-    padding: 8px;
+    font-family: "Open Sans", sans-serif;
+    font-size: 1rem;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    background-color: #2a2928;
+    color: #e4dad1;
+    border: 1px solid #4c4946;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.hs-input:focus {
+    border-color: #6a24fa;
+}
+
+.hs-input::placeholder {
+    color: #7a7572;
 }
 
 .milestone {

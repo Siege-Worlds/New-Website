@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+require_once('core/core.php');
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <title>Admin Login</title>
+// If already admin, go to dashboard
+if (is_admin()) {
+    header('Location: admin_dashboard.php');
+    exit;
+}
 
     <?php
     session_start();
@@ -30,31 +30,31 @@
         }
     }
     ?>
-
-
-</head>
-
-<body>
-
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-4">
-                <h3 class="text-center">Admin Login</h3>
-                <form action="admin.php" method="post">
-                    <div class="form-group">
-                        <label for="username">Username:</label>
-                        <input type="text" class="form-control" id="username" name="username" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password:</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block">Login</button>
-                </form>
-            </div>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Access Denied</title>
+        <style>
+            body { background:#1a1918; color:#bab1a8; font-family:"Open Sans",sans-serif; display:flex; align-items:center; justify-content:center; min-height:100vh; margin:0; }
+            .box { text-align:center; }
+            .box h1 { font-size:2rem; color:#fff; margin-bottom:0.5rem; }
+            .box a { color:#6a24fa; }
+        </style>
+    </head>
+    <body>
+        <div class="box">
+            <h1>Access Denied</h1>
+            <p>Your account does not have admin privileges.</p>
+            <p><a href="index.php">&larr; Back to Site</a></p>
         </div>
-    </div>
+    </body>
+    </html>
+    <?php
+    exit;
+}
 
-</body>
-
-</html>
+// Not logged in — redirect to SSO
+header('Location: login.php');
+exit;

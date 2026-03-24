@@ -20,7 +20,7 @@
 
                 for (var i = 0; i < result.length; i++) {
                     document.write("<tr>");
-                    document.write("<td><img style = 'width:64px; height:64px' src = \"img/game/sprites/" + i + ".png\" </td>");
+                    document.write("<td><img style = 'width:64px; height:64px' src = \"img/sprites/" + i + ".webp\" </td>");
                     document.write("<td>" + result[i] + "</td>");
                     document.write("</tr>");
                 }

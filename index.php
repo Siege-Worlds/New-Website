@@ -7,7 +7,9 @@
     require_once('core/core.php');
     head();
     ?>
-
+    <style>
+        header.header .header-brand img { width: 350px; }
+    </style>
 </head>
 
 <body>
@@ -26,11 +28,13 @@
 
     <?php roadmap(); ?>
 
-
+    <?php chat_shiyang(); ?>
 
     <?php content_center_button(); ?>
 
     <?php content_image_right("Competitive", "Tournaments", "Join week-long tournaments, where the highest scorers emerge victorious, claiming cryptocurrency or exclusive NFT prizes.", "", ""); ?>
+
+    <?php partnerships(); ?>
 
     <!--?php image_section(); ?-->
 
