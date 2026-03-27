@@ -27,18 +27,18 @@
                         <?php echo "Download"; ?>
                     </h1>
                     <p>
-                        <?php echo 'Siege Worlds is free to play, you can download our game client version 4.3.0 here.'; ?>
+                        <?php echo 'Siege Worlds is free to play, you can download our game client version 4.4.2 here.'; ?>
                     </p>
 
                     <div class="download-box">
                       <div class="download-step">
                         <h2>Step 1</h2>
                         <h3 class="step-title"><i class="fa-solid fa-download"></i> Game Download</h3>
-                        <a href="/downloads/siegeworlds_4-3-0_win.zip" target="_blank" class="download-button">
+                        <a href="/downloads/siegeworlds_4-4-2_win.zip" target="_blank" class="download-button">
                           <i class="fa-brands fa-windows"></i>
                           Windows PC
                         </a>
-                        <a href="downloads/siegeworlds_4-3-0_mac.zip" target="_blank" class="download-button">
+                        <a href="downloads/siegeworlds_4-4-2_mac.zip" target="_blank" class="download-button">
                           <i class="fa-brands fa-apple"></i>
                           Mac OS
                         </a>
