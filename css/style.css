@@ -2334,7 +2334,7 @@ header.header .header-navigation .active {
     left: -20px;
     right: -20px;
     bottom: -20px;
-    background-color: rgba(0, 0, 0, 0.2);
+    /*background-color: rgba(0, 0, 0, 0.2);*/
     border: none;
     z-index: 0;
     pointer-events: none;
