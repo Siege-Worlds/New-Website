@@ -39,9 +39,7 @@
     <div class="dark-bar-pattern bottom flip"></div>
 </div>
 <div class="section trailer-video bg-dark">
-    <div class="container">
-        <div class="trailer-wrapper">
-            <iframe src="https://www.youtube.com/embed/C9AuKJGIRns?autoplay=1&mute=1&loop=1&playlist=C9AuKJGIRns&controls=0&showinfo=0&rel=0&modestbranding=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        </div>
+    <div class="trailer-wrapper">
+        <iframe src="https://www.youtube.com/embed/C9AuKJGIRns?autoplay=1&mute=1&loop=1&playlist=C9AuKJGIRns&controls=0&showinfo=0&rel=0&modestbranding=1" title="Siege Worlds trailer" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
     </div>
 </div>

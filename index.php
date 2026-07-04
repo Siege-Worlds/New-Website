@@ -26,7 +26,7 @@
     <?php quote(); ?>
 
 
-    <?php roadmap(); ?>
+    <!--<?php roadmap(); ?>-->
 
     <?php chat_shiyang(); ?>
 

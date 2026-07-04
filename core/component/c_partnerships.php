@@ -54,10 +54,7 @@
             <div class="swiper-pagination"></div>
         </div>
 
-        <div class="partner-cta">
-            <h2>Partner With Us</h2>
-            <a href="mailto:geoff@lightningworks.io">geoff@lightningworks.io</a>
-        </div>
+        
     </div>
 </div>
 

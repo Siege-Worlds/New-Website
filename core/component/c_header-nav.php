@@ -25,7 +25,7 @@ $_login_url = $_sso_base . '/login?app=' . urlencode($_sso_app) . '&redirect=' .
             <?php if (!$_is_logged_in): ?>
             <a class="buy-button button-green" href="<?php echo htmlspecialchars($_login_url); ?>">Create Account</a>
             <?php endif; ?>
-            <a class="buy-button button-contest" href="contest.php">Contest</a>
+            
             <?php if ($_is_admin): ?>
             <a class="buy-button button-admin" href="admin_dashboard.php">Admin</a>
             <?php endif; ?>
@@ -45,17 +45,15 @@ $_login_url = $_sso_base . '/login?app=' . urlencode($_sso_app) . '&redirect=' .
                 </div>
             </div>
             <?php else: ?>
-            <a href="<?php echo htmlspecialchars($_login_url); ?>" class="hamburger-item hamburger-primary">Log In</a>
+            <a href="login.php" class="hamburger-item hamburger-primary">Log In</a>
             <div class="hamburger-divider"></div>
-            <a href="<?php echo htmlspecialchars($_login_url); ?>" class="hamburger-item hamburger-primary">Create Account</a>
+            <a href="signup.php>" class="hamburger-item hamburger-primary">Create Account</a>
             <?php endif; ?>
 
             <div class="hamburger-divider"></div>
             <a href="download.php" class="hamburger-item">Download</a>
             <div class="hamburger-divider"></div>
             <a href="leaderboards.php" class="hamburger-item">Leaderboards</a>
-            <div class="hamburger-divider"></div>
-            <a href="contest.php" class="hamburger-item">Contest</a>
             <div class="hamburger-divider"></div>
             <a href="https://medium.com/siege-worlds/beginners-guide-to-playing-siege-worlds-1725cec0e3b3" target="_blank" class="hamburger-item">How to Play</a>
 
