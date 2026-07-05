@@ -2,6 +2,11 @@
 <html lang="en">
 
 <head>
+
+    <?php
+    require_once('core/core.php');
+    ?>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Siege Pass</title>
@@ -251,6 +256,9 @@
             </div>
 
             <script>
+                // 1. Inject the PHP variable into a JavaScript constant
+                const API_BASE = "<?php echo $API_BASE; ?>";
+
                 const subscribeForm = document.getElementById('subscribe-form');
                 const usernameInput = document.getElementById('username');
                 const subscribeStatus = document.getElementById('subscribe-status');
@@ -268,7 +276,8 @@
                         subscribeStatus.textContent = 'Checking eligibility...';
 
                         try {
-                            const response = await fetch(`/api/can_user_subscribe/${encodeURIComponent(username)}`, {
+                            // 2. Use the template literal to append the API base dynamically
+                            const response = await fetch(`${API_BASE}/api/can_user_subscribe/${encodeURIComponent(username)}`, {
                                 method: 'GET',
                                 headers: {
                                     Accept: 'application/json',
