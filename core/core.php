@@ -94,6 +94,73 @@ function is_admin()
         || (isset($_SESSION['roles']) && (in_array('admin', $_SESSION['roles']) || in_array('superadmin', $_SESSION['roles'])));
 }
 
+function can_subscribe_username($username)
+{
+    $username = trim((string) $username);
+
+    if ($username === '') {
+        return ['ok' => false, 'message' => 'Please enter a username.'];
+    }
+
+    $url = $GLOBALS['API_BASE'] . '/api/cansubscribe/' . rawurlencode($username);
+
+    if (function_exists('curl_init')) {
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+        curl_setopt($ch, CURLOPT_HEADER, true);
+
+        $response = curl_exec($ch);
+        $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+        $headerText = substr($response, 0, $headerSize);
+        $body = substr($response, $headerSize);
+        curl_close($ch);
+
+        $location = '';
+        if (preg_match('/^Location:\s*(.+)$/mi', $headerText, $matches)) {
+            $location = trim($matches[1]);
+        }
+
+        if ($location !== '') {
+            return ['ok' => true, 'redirect_url' => $location];
+        }
+
+        $payload = json_decode($body, true);
+        if (is_array($payload)) {
+            if (!empty($payload['message'])) {
+                return ['ok' => false, 'message' => $payload['message']];
+            }
+
+            if (!empty($payload['redirect_url'])) {
+                return ['ok' => true, 'redirect_url' => $payload['redirect_url']];
+            }
+        }
+
+        return ['ok' => false, 'message' => 'Unable to verify subscription eligibility.'];
+    }
+
+    $context = stream_context_create(['http' => ['timeout' => 20]]);
+    $response = @file_get_contents($url, false, $context);
+
+    if ($response === false) {
+        return ['ok' => false, 'message' => 'Unable to verify subscription eligibility.'];
+    }
+
+    $payload = json_decode($response, true);
+    if (is_array($payload)) {
+        if (!empty($payload['message'])) {
+            return ['ok' => false, 'message' => $payload['message']];
+        }
+
+        if (!empty($payload['redirect_url'])) {
+            return ['ok' => true, 'redirect_url' => $payload['redirect_url']];
+        }
+    }
+
+    return ['ok' => false, 'message' => 'Unable to verify subscription eligibility.'];
+}
+
 function render_avatar($size = 48)
 {
     $avatarUrl = $_SESSION['avatar_url'] ?? '';
