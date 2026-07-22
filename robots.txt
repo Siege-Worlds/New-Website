@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /account
+Disallow: /admin
+Disallow: /verify
+Disallow: /forgot-password
+Disallow: /reset-password
+
+Sitemap: https://www.siegeworlds.com/sitemap.xml
